@@ -1,0 +1,90 @@
+--get Procedure sp together*****
+    Declare @procName varchar(500) 
+    Declare cur Cursor For 
+    select name from sys.procedures where modify_date>'2023-01-04' order by modify_date 
+    Open cur 
+    Fetch Next From cur Into @procName 
+    While @@fetch_status = 0 
+    Begin 
+     Exec('sp_helptext ' + @procName) 
+     Fetch Next From cur Into @procName 
+    End
+    Close cur 
+    Deallocate cur 
+--End***
+go
+----------------------------------------------------------------------------
+
+
+--drop all user defined stored procedures******
+    Declare @procName varchar(500) 
+    Declare cur Cursor For Select [name] From sys.objects where type = 'p' 
+    Open cur 
+    Fetch Next From cur Into @procName 
+    While @@fetch_status = 0 
+    Begin 
+     Exec('drop procedure ' + @procName) 
+     Fetch Next From cur Into @procName 
+    End
+    Close cur 
+    Deallocate cur 
+--End***
+go
+--drop all user defined views******
+
+    Declare @viewName varchar(500) 
+    Declare cur Cursor For Select [name] From sys.objects where type = 'v' 
+    Open cur 
+    Fetch Next From cur Into @viewName 
+    While @@fetch_status = 0 
+    Begin 
+     Exec('drop view ' + @viewName) 
+     Fetch Next From cur Into @viewName 
+    End
+    Close cur 
+    Deallocate cur 
+
+--End***
+go
+--drop all user defined triggers******
+Declare @trgName varchar(500) 
+Declare cur Cursor For Select [name] From sys.objects where type = 'tr' 
+Open cur 
+Fetch Next From cur Into @trgName 
+While @@fetch_status = 0 
+Begin 
+ Exec('drop trigger ' + @trgName) 
+ Fetch Next From cur Into @trgName 
+End
+Close cur 
+Deallocate cur 
+
+--End***
+go
+
+--For User Defined Table Type******
+
+select  'drop type ' + quotename(schema_name(schema_id)) + '.' + quotename(name)
+from sys.types
+where is_user_defined = 1
+
+--End***
+go
+
+
+
+--drop all functions******
+
+Declare @sql NVARCHAR(MAX) = N'';
+
+SELECT @sql = @sql + N' DROP FUNCTION ' 
+                   + QUOTENAME(SCHEMA_NAME(schema_id)) 
+                   + N'.' + QUOTENAME(name)
+FROM sys.objects
+WHERE type_desc LIKE '%FUNCTION%';
+
+Exec sp_executesql @sql
+GO
+
+--End***
+

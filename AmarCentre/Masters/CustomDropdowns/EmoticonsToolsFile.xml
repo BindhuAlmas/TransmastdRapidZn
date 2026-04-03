@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <tools name="MainToolbar">
+    <tool name="Emoticons" Name="Emoticons"  type="SplitButton" ItemsPerRow="5" PopupWidth="170px" PopupHeight="117px">
+      <item  name="&lt;img src='icons/1.gif' />"  value="icons/1.gif"  />
+      <item  name="&lt;img src='icons/2.gif' />"  value="icons/2.gif"  />
+      <item  name="&lt;img src='icons/3.gif' />"  value="icons/3.gif"  />
+      <item  name="&lt;img src='icons/4.gif' />"  value="icons/4.gif"  />
+      <item  name="&lt;img src='icons/5.gif' />"  value="icons/5.gif"  />
+      <item  name="&lt;img src='icons/6.gif' />"  value="icons/6.gif"  />
+      <item  name="&lt;img src='icons/7.gif' />"  value="icons/7.gif"  />
+      <item  name="&lt;img src='icons/8.gif' />"  value="icons/8.gif"  />
+      <item  name="&lt;img src='icons/9.gif' />"  value="icons/9.gif"  />
+      <item  name="&lt;img src='icons/10.gif' />"  value="icons/10.gif"  />
+      <item  name="&lt;img src='icons/11.gif' />"  value="icons/11.gif"  />
+      <item  name="&lt;img src='icons/12.gif' />"  value="icons/12.gif"  />
+      <item  name="&lt;img src='icons/13.gif' />"  value="icons/13.gif"  />
+      <item  name="&lt;img src='icons/14.gif' />"  value="icons/14.gif"  />
+      <item  name="&lt;img src='icons/15.gif' />"  value="icons/15.gif"  />
+      <item  name="&lt;img src='icons/16.gif' />"  value="icons/16.gif"  />
+      <item  name="&lt;img src='icons/17.gif' />"  value="icons/17.gif"  />
+      <item  name="&lt;img src='icons/18.gif' />"  value="icons/18.gif"  />
+      <item  name="&lt;img src='icons/19.gif' />"  value="icons/19.gif"  />
+      <item  name="&lt;img src='icons/20.gif' />"  value="icons/20.gif"  />
+      <item  name="&lt;img src='icons/21.gif' />"  value="icons/21.gif"  />
+      <item  name="&lt;img src='icons/22.gif' />"  value="icons/22.gif"  />
+      <item  name="&lt;img src='icons/23.gif' />"  value="icons/23.gif"  />
+      <item  name="&lt;img src='icons/24.gif' />"  value="icons/24.gif"  />
+      <item  name="&lt;img src='icons/25.gif' />"  value="icons/25.gif"  />
+    </tool>
+  </tools>
+</root>

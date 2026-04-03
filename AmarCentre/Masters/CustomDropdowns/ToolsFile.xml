@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+ 
+  <tools name="MainToolbar">
+ 
+    <tool name="UnorderedListType" text="Unordered List Type"  type="dropdown">
+      <item name="Clear List Style" value=""></item>
+      <item name="Circle" value="circle"></item>
+      <item name="Disc" value="disc"></item>
+      <item name="Square" value="square"></item>
+    </tool>
+     
+    <tool separator="true"/>
+ 
+    <tool name="OrderedListType" text="Ordered List Type"  type="dropdown">
+      <item name="Clear List Style" value=""></item>
+      <item name="Upper Alpha" value="upper-alpha"></item>
+      <item name="Upper Roman" value="upper-roman"></item>
+      <item name="Lower Alpha" value="lower-alpha"></item>
+      <item name="Lower Roman" value="lower-roman"></item>
+      <item name="Decimal" value="decimal"></item>
+    </tool>
+  </tools>
+  
+</root>

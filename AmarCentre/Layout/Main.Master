@@ -1,0 +1,338 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="AmarCentre.Layout.Main" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <link href="../Styles/WOM.css" rel="stylesheet" type="text/css" />
+    <link href="../Styles/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="../Images/Favicon.ico" />
+    <link rel="icon" href="../Images/Favicon.ico" type="image/png" />
+    <script src="../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="../Scripts/Nitsoft.js" type="text/javascript"></script>
+    <title>TRANSMAS</title>
+    <style type="text/css">
+        /* NAV */
+
+        .nav {
+            margin-top: 13px;
+            display: flex;
+            padding-bottom: 8px;
+            font-weight:200;
+        }
+
+            .nav a {
+                text-decoration: none;
+                color: #666;
+                font-size: 14px;
+                display:block;
+                padding:0.5%;
+
+            }
+
+            .nav a:hover {
+                color: Red;
+                background-color:#f3d9e6;
+               /*border-radius:25%;*/
+            }
+
+        /*end*/
+        .Sub_menu_Div {
+            display: none;
+        }
+
+        .noDecoration {
+            text-decoration: none;
+            color: #1f0db5;
+            margin-left: 1%;
+        }
+
+        .noDecorationicon {
+            text-decoration: none;
+            color: #1f0db5;
+            margin-left: 7%;
+        }
+
+        .titleimg {
+            width: 21px;
+            height: 21px;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <div class="title_bar">
+        <div class="companyTitleDiv" style="background-color:#16093e">
+            <div style="height: 60px;  width: 100%; }">
+           <asp:Image ID="imglogo" style="margin-top:0px" runat="server" src="../Images/logotrans.png"  class="Profile_image" />
+                </div>
+        </div>
+         <div style="height: 60%">
+            
+        <div class="Time">
+            time
+        </div>
+         <div style="float: right; width: 20%; margin-top: 1%; text-align: right; margin-right: 1%;">
+                            <a href="#" runat="server" id="A1" onserverclick="lnkProfileOnclick" class="noDecorationicon">
+                                <img src="../Images/editprofile.png" class="titleimg" alt="" />
+                            </a>
+                            <a href="#" runat="server" id="A2" onserverclick="lnkPasswordChangeOnClick" style="cursor: pointer" class="noDecorationicon">
+                                <img src="../Images/resetpassword.png" alt="" class="titleimg" />
+                            </a>
+                            <a href="../Landing.aspx" class="noDecorationicon">
+                                <img src="../Images/poweroff.png" alt="" class="titleimg" />
+                            </a>
+                </div>
+                <div style="float: right; width: 43%; margin-top: 1%; text-align: left; margin-left: 1%; font-size: 21px; color: orangered">
+                    <asp:Label ID="lblCompany" runat="server"></asp:Label>
+                </div>
+              </div>
+        <div style="clear:both"></div>
+         <div style="height: 20%">
+         <div class="nav" style="float: right; width: 55%; font-size:13px;  text-align: right; margin-right: 10px;">
+            <%-- <div class="nav" >--%>
+            <a href="../Dashboard.aspx" class="noDecoration"><asp:Label ID="lbldash" runat="server"></asp:Label> </a> 
+ <a href="../CustomerDashboard.aspx" class="noDecoration"><asp:Label ID="lblCustDash" Text="Customer Dashboard" runat="server"></asp:Label> </a> 
+           <a href="../WhatsappDashboard.aspx" class="noDecoration"><asp:Label ID="lblWhatsappDash" Text="Whatsapp Dashboard" runat="server"></asp:Label> </a> 
+               <a href="../Masters/DcoumentExpiryList.aspx" class="noDecoration"><asp:Label ID="lbldoc" runat="server"></asp:Label> </a> 
+             <a href="../Masters/DeadlineList.aspx" class="noDecoration"><asp:Label ID="lbldeadline" Text="Deadline" runat="server"></asp:Label> </a> 
+             <a href="../Masters/ServiceFollowupList.aspx" class="noDecoration"><asp:Label ID="lblfollowup" Text="Followup List" runat="server"></asp:Label> </a> 
+             <a href="../Masters/VisaArrivalList.aspx" class="noDecoration"><asp:Label ID="lblvisalist" Text="Visa List" runat="server"></asp:Label> </a> 
+        </div>
+             </div>
+    </div>
+    <div class="body_div">
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false"
+            style="height: 98%; width: 15%; float: left; overflow-y: auto; border-top: 1px solid #1e0911;">
+            <ContentTemplate>
+            <div style="background-color: #16093e; color: white; font-size: 11px; font-weight: bold;
+                height: 20%; padding: 10px;">
+                <div style="height: 60px; text-align: center !important; width: 100%; }">
+                    <asp:Image ID="img_profile" runat="server" ImageUrl="../Images/profiles.png" class="Profile_image" />
+                </div>
+                <div style="text-align: center; padding-top: 10px; }">
+                    <asp:Label ID="lbl_User_name" runat="server"></asp:Label><br />
+                    <asp:Label ID="lblDesignation" runat="server" Style="color: Gray; font-weight: normal"></asp:Label>
+                    <asp:HiddenField ID="hdn_language" runat="server" />
+                    <asp:HiddenField ID="hdn_user_id" runat="server" />
+                </div>
+            </div>
+            <div class="menu_div" style="height: 76%">
+              
+                <asp:Repeater ID="rpt_main_menu" runat="server" OnItemDataBound="rpt_main_menu_OnItemDataBound">
+                    <ItemTemplate>
+                        <div class="Main_menu">
+                            <%--<span class="icon"><i>&#9732 </i></span>--%>
+                            <span class="MainMenuItem">
+                                <%#Eval("DisplayName")%></span>
+                            <asp:HiddenField ID="hdn_id" runat="server" Value=' <%# Eval("Id")%>' />
+                            <div class="Sub_menu_Div">
+                                <asp:Repeater ID="rpt_side_menu" runat="server">
+                                    <ItemTemplate>
+                                        <a style="text-decoration: none; width: 100%" href='<%# Eval("Destination") %>'>
+                                            <div class="Sub_menu_item">
+                                                <%# Eval("MenuName")%>
+                                            </div>
+                                        </a>
+                                       
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </div>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+                <%--  <a style="text-decoration: none; color: Black; width: 100%" href='../Landing.aspx'>
+                    <div class="Main_menu">
+                        Logout
+                    </div>
+                </a>--%>
+            </div>
+         </ContentTemplate>
+        </asp:UpdatePanel>
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false"
+            style="height: 94%; width: 85%; float: left; overflow-y: auto; border-top: 1px solid #EFF5FC;">
+            <ContentTemplate>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <asp:UpdateProgress ID="UpdateProgress2" runat="server">
+            <ProgressTemplate>
+                <div style="position: fixed; height: 100%; width: 100%; background-color: rgb(23, 20, 20);
+                    left: 0px; top: 0px; opacity: 0.6; z-index: 10000">
+                    <div style="height: 25%; top: 28%; background-color: transparent; position: absolute;
+                        left: 37%; width: 15%;">
+                        <img src="../Images/32.gif" style="height: 100%; width: 100%" />
+                    </div>
+                </div>
+            </ProgressTemplate>
+        </asp:UpdateProgress>
+    </div>
+    <div>
+        <asp:UpdatePanel ID="UpdPasswordChangePanel" runat="server" ChildrenAsTriggers="false"
+            UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:Panel ID="PanelPasswordChange" Visible="false" runat="server">
+                    <div class="popupBackground">
+                    </div>
+                    <div class="animated smallPopUp">
+                        <div class="Adding_heading">
+                            Change Password
+                        </div>
+                        <asp:UpdatePanel ID="UpdPasswordChangeInner" runat="server" ChildrenAsTriggers="false"
+                            UpdateMode="Conditional">
+                            <ContentTemplate>
+                                <table class="formTable">
+                                    <tr>
+                                        <td>
+                                            Current Password <span style="color: Red">&nbsp*</span>
+                                            <asp:TextBox ID="txtCurrentPassword" TextMode="Password" CssClass="txt" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ControlToValidate="txtCurrentPassword"
+                                                ValidationGroup="savePassword" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
+                                                InitialValue=""></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            New Password <span style="color: Red">&nbsp*</span>
+                                            <asp:TextBox ID="txtNewPassword" TextMode="Password" CssClass="txt" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtNewPassword"
+                                                ValidationGroup="savePassword" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
+                                                InitialValue=""></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Confirm Password <span style="color: Red">&nbsp*</span>
+                                            <asp:TextBox ID="txtConfirmPassword" TextMode="Password" CssClass="txt" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtConfirmPassword"
+                                                ValidationGroup="savePassword" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
+                                                InitialValue=""></asp:RequiredFieldValidator>
+                                            <asp:CompareValidator ID="Password" runat="server" ControlToCompare="txtNewPassword"
+                                                ControlToValidate="txtConfirmPassword" ValidationGroup="savePassword" Display="Dynamic"
+                                                ErrorMessage="Password should be change as new password" Style="color: Red" InitialValue=""></asp:CompareValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <asp:Button ID="btnSavePassword" class="butn_save" ValidationGroup="savePassword"
+                                                    OnClick="btnSavePassword_OnClick" runat="server" Text="Update" />
+                                                <asp:Button ID="btnResetPassword" class="butn" runat="server" Text="Reset" OnClick="btnResetPassword_OnClick" />
+                                                <asp:Button ID="btnClosePassword" class="butn" runat="server" Text="Close" OnClick="btnClosePassword_OnClick" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                </asp:Panel>
+                <div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+    <div>
+        <asp:UpdatePanel ID="UpdProfilePanel" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:Panel ID="PanelProfile" Visible="false" runat="server">
+                    <div class="popupBackground">
+                    </div>
+                    <div class="animated smallPopUp">
+                        <div class="Adding_heading">
+                            Profile Update
+                        </div>
+                        <asp:UpdatePanel ID="UpdProfileInner" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                            <ContentTemplate>
+                                <table class="formTable">
+                                    <tr>
+                                        <td style="width: 49%">
+                                            Name <span style="color: Red">&nbsp*</span>
+                                            <asp:TextBox ID="txtProfileName" CssClass="txt" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtProfileName"
+                                                ValidationGroup="saveProfile" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
+                                                InitialValue=""></asp:RequiredFieldValidator>
+                                        </td>
+                                        <td rowspan="4" style="width: 49%">
+                                            <asp:UpdatePanel ID="UpdProfilePhoto" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <div class="profile_img_div" style="width: 151px">
+                                                        <asp:Image ID="imgProfilePhoto" runat="server" Style="border: 1px solid orange; height: 100%;
+                                                            width: 100%;" ImageUrl="~/Images/defaultimage.png" />
+                                                    </div>
+                                                    <telerik:RadAsyncUpload ID="fuProfilePhoto" MaxFileSize="500000000" runat="server"
+                                                        MaxFileInputsCount="1" OnFileUploaded="fuProfilePhoto_OnFileUploaded" Width="100%">
+                                                    </telerik:RadAsyncUpload>
+                                                    <asp:HiddenField ID="hdnProfileFileName" runat="server" />
+                                                    <asp:HiddenField ID="hdnProfileFileSaveName" runat="server" />
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Mobile Number <span style="color: Red">&nbsp*</span>
+                                            <asp:TextBox ID="txtProfileMobile" class="txt numbers_only" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtProfileMobile"
+                                                ValidationGroup="saveProfile" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
+                                                InitialValue=""></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Phone Number
+                                            <br />
+                                            <asp:TextBox ID="txtProfilePhone" class="txt numbers_only" runat="server"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Email
+                                            <asp:TextBox ID="txtProfileEmail" CssClass="txt" runat="server"></asp:TextBox>
+                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ErrorMessage="Please Enter Valid Email ID"
+                                                ValidationGroup="saveProfile" ControlToValidate="txtProfileEmail" Style="color: Red"
+                                                ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" Display="Dynamic">
+                                            </asp:RegularExpressionValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div>
+                                                <asp:Button ID="btnSaveProfile" class="butn_save" ValidationGroup="saveProfile" OnClick="btnSaveProfile_OnClick"
+                                                    runat="server" Text="Update" />
+                                                <asp:Button ID="btnResetProfile" class="butn" runat="server" Text="Reset" OnClick="btnResetProfile_OnClick" />
+                                                <asp:Button ID="btnCloseProfile" class="butn" runat="server" Text="Close" OnClick="btnCloseProfile_OnClick" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                </asp:Panel>
+                <div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+    <%-- <asp:UpdatePanel ID="UpdatePanel2" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+            <ContentTemplate>--%>
+    <div id="divpop3" class="messageAlert divMasterPop animated" style="display: none"
+        runat="server">
+        <div class="tick">
+            &#10004
+        </div>
+        <div>
+            <asp:Label ID="lblProfileMsg" runat="server" class="messageLabel"></asp:Label>
+        </div>
+    </div>
+    <%--</ContentTemplate>
+            </asp:UpdatePanel>--%>
+    </form>
+</body>
+</html>

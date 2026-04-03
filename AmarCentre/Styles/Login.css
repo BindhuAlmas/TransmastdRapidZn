@@ -1,0 +1,58 @@
+﻿Html
+{
+    height: 100%;
+}
+body
+{
+    margin: 0px;
+}
+.Header_div
+{
+    background-color: #111111;
+    border-bottom: 1px solid grey;
+    color: white;
+    height: 30px;
+}
+
+.Land_menu_div {
+    border-bottom: 1px solid #aabccf;
+    padding: 10px;
+    text-align: right;
+}
+.Land_Menu {
+    border: medium none;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+     .bck_green
+     {
+         background-color: green;
+         }
+      .bck_red
+     {
+         background-color: #e93108;
+         }
+    .Cmp_logo
+    {
+            float: left;
+    min-height: 200px;
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle !important;
+    width: 40%;
+        }
+        .Cmp_Name
+        {
+                color: #0d7cc1;
+    font-family: icon;
+    font-size: 60px;
+            }
+        .Cmp_Description
+        {
+               font-family: Tahoma;
+    font-size: 17px;
+    padding: 20px; 
+            }

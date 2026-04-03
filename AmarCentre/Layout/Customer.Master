@@ -1,0 +1,81 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Customer.master.cs" Inherits="AmarCentre.Layout.Customer" %>
+
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <link href="../Styles/GoldV3.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="../Images/Favicon.ico" />
+    <link rel="icon" href="../Images/Favicon.ico" type="image/png" />
+    <%--<script src="../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>--%>
+    <script src="../Scripts/Nitsoft.js" type="text/javascript"></script>
+    <title>TRANSMAS</title>
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+     <link rel="stylesheet" href="../Styles/WOM.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false"
+            style="height: 98%; width: 21%; float: left; overflow-y: auto; border-top: 1px solid #EFF5FC;">
+            <ContentTemplate>
+                <div id="mySidenav" class="sidenav">
+
+                    <p class="logo"><span>T</span>rans<span>M</span>as</p>
+                    
+                    <i class="fa-solid fa-list-dropdown"></i>
+                    <a class="icon-a"><i class="fa-solid fa-house-chimney icons"></i>&nbsp;&nbsp;
+        <asp:Button ID="Button8" runat="server" PostBackUrl="../CHome.aspx" Text="Dashboard" Font-Bold="true" Style="border: none; cursor: pointer; background-color: transparent; font-size: 20px; color: #afa9a9;" />
+                    </a>
+                    <a class="icon-a" runat="server" id="btnServiceRequest"><i class="fa-solid fa-code-pull-request icons"></i>&nbsp;&nbsp;
+        <asp:Button ID="Button1" runat="server" PostBackUrl="../Customer/ServiceRequest.aspx" Text="Service Request" Font-Bold="true" Style="border: none; cursor: pointer; background-color: transparent; font-size: 20px; color: #afa9a9;" />
+                    </a>
+                    <a class="icon-a" runat="server" id="btnSCStatus"><i class="fa-solid fa-pen-to-square icons"></i>&nbsp;&nbsp;
+         <asp:Button ID="Button2" runat="server" PostBackUrl="../Customer/SCStatus.aspx" Text="Work Status" Font-Bold="true" Style="border: none; cursor: pointer; background-color: transparent; font-size: 20px; color: #afa9a9;" /></a>
+                    <a class="icon-a" runat="server" id="btnInvoiceList"><i class="fa-solid fa-list icons"></i>&nbsp;&nbsp;
+         <asp:Button ID="Button3" runat="server" PostBackUrl="../Customer/InvoiceList.aspx" Text="Invoice List" Font-Bold="true" Style="border: none; cursor: pointer; background-color: transparent; font-size: 20px; color: #afa9a9;" /></a>
+                    <a class="icon-a" runat="server" id="btnSOA"><i class="fa-solid fa-money-check-dollar icons"></i>&nbsp;&nbsp;
+         <asp:Button ID="Button4" runat="server" PostBackUrl="../Customer/SOA.aspx" Text="Account Statement" Font-Bold="true" Style="border: none; cursor: pointer; background-color: transparent; font-size: 20px; color: #afa9a9;" /></a>
+                    
+                    <a class="icon-a" runat="server" id="btnDocumentExpiry"><i class="fa-solid fa-clock icons"></i>&nbsp;&nbsp;
+         <asp:Button ID="Button5" runat="server" PostBackUrl="../Customer/DocumentExpiry.aspx" Text="Document Expiry" Font-Bold="true" Style="border: none; cursor: pointer; background-color: transparent; font-size: 20px; color: #afa9a9;" /></a>
+                    <a class="icon-a" runat="server" id="btnCustomerDocDwnld"><i class="fa-solid fa-file-arrow-down icons"></i>&nbsp;&nbsp;
+         <asp:Button ID="Button6" runat="server" PostBackUrl="../Customer/CustomerDocDwnld.aspx" Text="Document Download" Font-Bold="true" Style="border: none; cursor: pointer; background-color: transparent; font-size: 20px; color: #afa9a9;" /></a>
+                    <a class="icon-a"><i class="fa-solid fa-right-from-bracket icons"></i>&nbsp;&nbsp;
+        <asp:Button ID="Button9" runat="server" PostBackUrl="../Landing.aspx" Text="Logout" Font-Bold="true" Style="border: none; cursor: pointer; background-color: transparent; font-size: 20px; color: #afa9a9;" />
+                    </a>
+                    <asp:HiddenField ID="hdn_user_id" runat="server" />
+                    <asp:HiddenField ID="hdn_name" runat="server" />
+                    <asp:HiddenField ID="hdnIsMainCompany" runat="server" />
+
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false"
+            style="height: 98%; width: 79%; float: left; overflow-y: auto; border-top: 1px solid #EFF5FC;">
+            <ContentTemplate>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <asp:UpdateProgress ID="UpdateProgress2" runat="server">
+            <ProgressTemplate>
+                <div style="position: fixed; height: 100%; width: 100%; background-color: rgb(23, 20, 20); left: 0px; top: 0px; opacity: 0.6; z-index: 10000">
+                    <div style="height: 25%; top: 28%; background-color: transparent; position: absolute; left: 37%; width: 15%;">
+                        <img src="../Images/32.gif" style="height: 100%; width: 100%" />
+                    </div>
+                </div>
+            </ProgressTemplate>
+        </asp:UpdateProgress>
+
+    </form>
+</body>
+</html>
+

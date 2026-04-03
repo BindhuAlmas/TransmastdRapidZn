@@ -1,0 +1,13 @@
+<style> .textmode { mso-number-format:\@; } </style><style> .textmode { mso-number-format:\@; } </style><div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr style="background-color:#ccc;">
+			<th scope="col">Sl No.</th><th scope="col">Name</th><th scope="col">ArabicName</th><th scope="col">Description</th><th scope="col">CreatedDate</th><th scope="col">Created by</th><th scope="col">UpdatedDate</th><th scope="col">Updated by</th>
+		</tr><tr>
+			<td>1</td><td>Passport</td><td>الاسم بالعربي</td><td>&nbsp;</td><td>17/08/2019</td><td>Administrator</td><td>07/09/2023</td><td>Administrator</td>
+		</tr><tr>
+			<td>2</td><td>Id</td><td>اسم </td><td>&nbsp;</td><td>17/08/2019</td><td>Administrator</td><td>07/09/2023</td><td>Administrator</td>
+		</tr><tr>
+			<td>3</td><td>Visa</td><td>الاسم بالعربي</td><td>&nbsp;</td><td>07/09/2023</td><td>Administrator</td><td>07/09/2023</td><td>Administrator</td>
+		</tr>
+	</table>
+</div>

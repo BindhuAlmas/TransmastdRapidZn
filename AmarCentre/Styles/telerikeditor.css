@@ -1,0 +1,20 @@
+﻿.reTool.reToolIcon.reSplitButton.reEmoticons,
+.reTool.reToolIcon.reSplitButton.reEmoticons2 {
+    background-image: url(icons/1.gif);
+    background-repeat: no-repeat;
+}
+
+.reTool.reDynamicSplitButton {
+    background-image: url(icons/InsertSnippet.gif) !important;
+    background-repeat: no-repeat;
+}
+
+    .reTool.reEmoticons:before,
+    .reTool.reEmoticons2:before,
+    .reTool.reDynamicSplitButton:before {
+        display: none;
+    }
+
+.reDropDownBody ul li {
+    display: inline !important;
+}
