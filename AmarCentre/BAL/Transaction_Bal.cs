@@ -1938,6 +1938,12 @@ namespace AmarCentre.BAL
 
         #endregion
 
+        // =============================================
+        // Updated section only: #region LeadCreation in Transaction_Bal.cs
+        // Replace the existing InsertUpdateLeadCreation method with this one.
+        // All other methods remain unchanged.
+        // =============================================
+
         #region LeadCreation
 
         public DataTable GetLeadList(int PageNumber, int PageSize, string Filter, int StatusId, int PriorityId, int UserId)
@@ -1973,11 +1979,23 @@ namespace AmarCentre.BAL
             return db_obj.GetDataTable();
         }
 
-        public int InsertUpdateLeadCreation(int Id, string Name, string Address, string MobileNumber, string EmailId, int UserId,
-            int? EmployeeId, string phone, string company, string response, int Priority, int? SourceId, DateTime? Follwup,
-             DateTime? apprclosingdate, DataTable dtService, DateTime? NextFollowupTime, int? JurisdictionId, DateTime? LeadDate,
-             string Activity, string ContactPersonDesig, string Website, string Campaign, string CountryCodeCN,
-             string CountryCodeLPN, int? CityId, int? SegmentId)
+        /// <summary>
+        /// Insert or update a Lead record.
+        /// New parameters added: LeadBrand, PassportNo, PassportIssueDate, PassportExpiryDate,
+        /// CurrentStatus, DOB, Nationality, MaritalStatus, MotherName.
+        /// </summary>
+        public int InsertUpdateLeadCreation(
+            int Id, string Name, string Address, string MobileNumber, string EmailId, int UserId,
+            int? EmployeeId, string phone, string company, string response, int Priority, int? SourceId,
+            DateTime? Follwup, DateTime? apprclosingdate, DataTable dtService, DateTime? NextFollowupTime,
+            int? JurisdictionId, DateTime? LeadDate,
+            string Activity, string ContactPersonDesig, string Website, string Campaign,
+            string CountryCodeCN, string CountryCodeLPN, int? CityId, int? SegmentId,
+            // NEW FIELDS
+            string LeadBrand, string PassportNo,
+            DateTime? PassportIssueDate, DateTime? PassportExpiryDate,
+            int? CurrentStatus, DateTime? DOB,
+            string Nationality, int? MaritalStatus, string MotherName)
         {
             Database_Operations db_obj = new Database_Operations("InsertUpdateLeadCreation", true);
             db_obj.AddParameter("@Id", Id);
@@ -2005,6 +2023,16 @@ namespace AmarCentre.BAL
             db_obj.AddParameter("@CountryCodeLPN", CountryCodeLPN);
             db_obj.AddParameter("@CityId", CityId);
             db_obj.AddParameter("@SegmentId", SegmentId);
+            // NEW FIELDS
+            db_obj.AddParameter("@LeadBrand", LeadBrand);
+            db_obj.AddParameter("@PassportNo", PassportNo);
+            db_obj.AddParameter("@PassportIssueDate", PassportIssueDate);
+            db_obj.AddParameter("@PassportExpiryDate", PassportExpiryDate);
+            db_obj.AddParameter("@CurrentStatus", CurrentStatus);
+            db_obj.AddParameter("@DOB", DOB);
+            db_obj.AddParameter("@Nationality", Nationality);
+            db_obj.AddParameter("@MaritalStatus", MaritalStatus);
+            db_obj.AddParameter("@MotherName", MotherName);
             db_obj.AddParameter("@UserId", UserId);
 
             db_obj.AddOutputParameter("@Result");

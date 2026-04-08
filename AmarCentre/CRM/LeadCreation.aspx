@@ -66,18 +66,12 @@
                             </th>
                             <th style="width: 5%;">Date
                             </th>
-                            
-                            <%--<th style="width: 12%;">Contact Person
-                            </th>--%>
                             <th style="width: 13%;">Lead Name
                             </th>
                             <th style="width: 10%;">Contact No
                             </th>
-                              <%--<th style="width: 8%;">Activity
-                            </th>--%>
                             <th style="width: 8%;">Status
                             </th>
-                           
                               <th style="width: 8%;">Priority
                             </th>
                             <th style="width: 4%;">Action
@@ -98,19 +92,12 @@
                                     <td>
                                         <%#Eval("LeadDates")%>
                                     </td>
-                                    
-                                    <%--<td>
-                                        <%#Eval("ContactPersonName")%>
-                                    </td>--%>
                                     <td>
                                         <%#Eval("CompanyName")%>
                                     </td>
                                     <td>
                                         <%#Eval("MobileNumber")%>
                                     </td>
-                                      <%--<td>
-                                        <%#Eval("Segmentname")%>
-                                    </td>--%>
                                     <td>
                                         <%#Eval("Statusname")%>
                                     </td>
@@ -178,7 +165,6 @@
                                 <table class="formTable">
                                     
                                      <tr>
-
                                         <td  style="width:33%">
                                             Code
                                             <asp:TextBox ID="lbl_Code" runat="server" class="txt read_Only" Font-Bold="true" Text=""></asp:TextBox>
@@ -193,9 +179,6 @@
                                             </SpecialDays>
                                         </Calendar>
                                     </telerik:RadDatePicker>
-                                            <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtName"
-                                                ValidationGroup="save" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
-                                                InitialValue=""></asp:RequiredFieldValidator>--%>
                                         </td>
                                            
                                         <td style="width: 33%">Lead Name <span style="color: Red">&nbsp*</span>
@@ -206,9 +189,7 @@
                                         </td>
                                     </tr>
 
-                                   
                                     <tr>
-                                         
                                          <td style="width: 33%">Contact Number <span style="color: Red">&nbsp*</span>
                                              <br />
                                                <asp:TextBox ID="txtCountryCodeCN" runat="server" Style="float: left; margin-right: 5%" Width="20%" class="txt"></asp:TextBox>
@@ -240,10 +221,6 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        
-                                        
-                                       
-                                       
                                          <td>Assigned Employee <span style="color: Red">&nbsp*</span>
                                             <telerik:RadComboBox ID="drpEmployee" Sort="Ascending" Filter="Contains" runat="server"
                                                 AllowCustomText="true" RenderMode="Lightweight" OnClientFocus="OnClientKeyPressing"
@@ -253,8 +230,6 @@
                                                 ValidationGroup="save" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
                                                 InitialValue=""></asp:RequiredFieldValidator>
                                         </td>
-                                        <%--</tr>
-                                    <tr>--%>
                                         <td>Priority <span style="color: Red">&nbsp*</span>
                                              <asp:UpdatePanel ID="updPriority" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
                                                  <ContentTemplate>
@@ -269,9 +244,7 @@
                                                      </ContentTemplate>
                                              </asp:UpdatePanel>
                                         </td>
-                                         <%--<td >--%>
-                                             <td>Activity <span style="color: Red">&nbsp*</span>
-                                            
+                                         <td>Activity <span style="color: Red">&nbsp*</span>
                                                  <asp:UpdatePanel ID="updSegment" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
                                                  <ContentTemplate>
                                                      <telerik:RadComboBox ID="drpSegment" Sort="Ascending" Filter="Contains" runat="server"
@@ -282,9 +255,8 @@
                                                      </telerik:RadComboBox>
                                                  </ContentTemplate>
                                              </asp:UpdatePanel>
-                                           
                                         </td>
-                                            </tr>
+                                    </tr>
                                     <tr>
                                         <td style="display:none">
                                            Jurisdiction
@@ -301,12 +273,80 @@
                                         </td>
                                     </tr>
                                      <tr>
-                                          
                                         <td colspan="2">Activity Description
                                             <br />
                                             <asp:TextBox ID="txtAddress" CssClass="txtarea" runat="server" TextMode="MultiLine"></asp:TextBox>
                                         </td>
                                     </tr>
+
+                                    <%-- ==================== NEW FIELDS START ==================== --%>
+                                    <tr>
+                                        <td style="width: 33%">Lead Brand
+                                            <asp:TextBox ID="txtLeadBrand" CssClass="txt" runat="server"></asp:TextBox>
+                                        </td>
+                                        <td style="width: 33%">Passport No
+                                            <asp:TextBox ID="txtPassportNo" CssClass="txt" runat="server"></asp:TextBox>
+                                        </td>
+                                        <td style="width: 33%">Passport Issue Date
+                                            <telerik:RadDatePicker ID="dpPassportIssueDate" runat="server" DateInput-DateFormat="dd/MM/yyyy">
+                                                <Calendar runat="server" ID="CalPassportIssue" CssClass="rtlSupport" ShowOtherMonthsDays="False"
+                                                    ShowRowHeaders="False" UseColumnHeadersAsSelectors="False">
+                                                    <SpecialDays>
+                                                        <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="#9D9D9D">
+                                                        </telerik:RadCalendarDay>
+                                                    </SpecialDays>
+                                                </Calendar>
+                                            </telerik:RadDatePicker>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 33%">Passport Expiry Date
+                                            <telerik:RadDatePicker ID="dpPassportExpiryDate" runat="server" DateInput-DateFormat="dd/MM/yyyy">
+                                                <Calendar runat="server" ID="CalPassportExpiry" CssClass="rtlSupport" ShowOtherMonthsDays="False"
+                                                    ShowRowHeaders="False" UseColumnHeadersAsSelectors="False">
+                                                    <SpecialDays>
+                                                        <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="#9D9D9D">
+                                                        </telerik:RadCalendarDay>
+                                                    </SpecialDays>
+                                                </Calendar>
+                                            </telerik:RadDatePicker>
+                                        </td>
+                                        <td style="width: 33%">Current Status
+                                            <asp:DropDownList ID="drpCurrentStatus" runat="server" CssClass="txt" style="width:96%">
+                                                <asp:ListItem Text="-- Select --" Value=""></asp:ListItem>
+                                                <asp:ListItem Text="Inside Country" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Outside Country" Value="2"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                        <td style="width: 33%">Date of Birth
+                                            <telerik:RadDatePicker ID="dpDOB" runat="server" DateInput-DateFormat="dd/MM/yyyy">
+                                                <Calendar runat="server" ID="CalDOB" CssClass="rtlSupport" ShowOtherMonthsDays="False"
+                                                    ShowRowHeaders="False" UseColumnHeadersAsSelectors="False">
+                                                    <SpecialDays>
+                                                        <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="#9D9D9D">
+                                                        </telerik:RadCalendarDay>
+                                                    </SpecialDays>
+                                                </Calendar>
+                                            </telerik:RadDatePicker>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 33%">Nationality
+                                            <asp:TextBox ID="txtNationality" CssClass="txt" runat="server"></asp:TextBox>
+                                        </td>
+                                        <td style="width: 33%">Marital Status
+                                            <asp:DropDownList ID="drpMaritalStatus" runat="server" CssClass="txt" style="width:96%">
+                                                <asp:ListItem Text="-- Select --" Value=""></asp:ListItem>
+                                                <asp:ListItem Text="Married" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Unmarried" Value="2"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                        <td style="width: 33%">Mother Name
+                                            <asp:TextBox ID="txtMotherName" CssClass="txt" runat="server"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <%-- ==================== NEW FIELDS END ==================== --%>
+
                                     <tr>
                                          <td style="display:none">Approx. Closing Date <span style="color: Red">&nbsp*</span>
                                             <telerik:RadDatePicker ID="ApprxClosingDate" runat="server" DateInput-DateFormat="dd/MM/yyyy">
@@ -318,9 +358,6 @@
                                                     </SpecialDays>
                                                 </Calendar>
                                             </telerik:RadDatePicker>
-                                           <%-- <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="ApprxClosingDate"
-                                                ValidationGroup="save" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
-                                                InitialValue=""></asp:RequiredFieldValidator>--%>
                                         </td>
                                         <td>Next Follow up Date <span style="color: Red">&nbsp*</span>
                                             <telerik:RadDatePicker ID="Followupdate" runat="server" DateInput-DateFormat="dd/MM/yyyy">
@@ -445,7 +482,6 @@
                                                 <asp:HiddenField ID="hdnHistory" runat="server" Value="0" />
                                                 <asp:HiddenField ID="hdnSendMail" runat="server" Value="0" />
                                                 <asp:HiddenField ID="hdnCreateQutn" runat="server" Value="0" />
-
                                             </div>
                                         </td>
                                     </tr>
@@ -454,15 +490,9 @@
     <td>
         <td style="width: 33%">Campaign <span style="color: Red">&nbsp*</span>
         <asp:TextBox ID="txtCampaign" CssClass="txt" runat="server"></asp:TextBox>
-        <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ControlToValidate="txtcompany"
-            ValidationGroup="save" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
-            InitialValue=""></asp:RequiredFieldValidator>--%>
     </td>
         <td style="width: 33%">Contact Person Name <span style="color: Red">&nbsp*</span>
         <asp:TextBox ID="txtName" CssClass="txt" runat="server"></asp:TextBox>
-        <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ControlToValidate="txtName"
-            ValidationGroup="save" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
-            InitialValue=""></asp:RequiredFieldValidator>--%>
     </td>
    
     <td style="width:33%">Contact Person designation
@@ -491,9 +521,6 @@
         <td>
         Segment
          <asp:TextBox ID="txtActivity" CssClass="txt" runat="server"></asp:TextBox>
-        <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="txtActivity"
-            ValidationGroup="save" Display="Dynamic" ErrorMessage="Required" Style="color: Red"
-            InitialValue=""></asp:RequiredFieldValidator>--%>
     </td>
 </tr>    
                                 </table>
@@ -724,138 +751,85 @@
                                     <table class="listTable">
                                         <thead>
                                             <tr>
-                                                 <th>Sl
-                                                </th>
-                                                <th style="color:red">Date
-                                                </th>
-                                                 <th  style="color:red">Campaign
-                                                </th>
-                                                 <th  style="color:red">CompanyName
-                                                </th>
-                                                 <th  style="color:red">ContactPersonName
-                                                </th>
-                                                
-                                                 <th  style="color:red">Segment
-                                                </th>
-                                                 <th  style="color:red">LeadSource
-                                                </th>
-                                                 <th  style="color:red">City
-                                                </th>
-                                               
-                                                 <th  style="color:red">ContactNumber
-                                                </th>
-                                                 <th>ContactPersondesignation
-                                                </th>
-                                                 
-                                                 <th>LandPhoneNo
-                                                </th>
-                                                 <th>Email
-                                                </th>
-                                                 <th>Website
-                                                </th>
-                                                 
-                                                 <th>AssignedEmployee
-                                                </th>
-                                                 <th>Priority
-                                                </th>
-                                                 
-                                                 <th>Activity
-                                                </th>
-                                                 <th>ActivityDescription
-                                                </th>
-                                                 
-                                                 <th>CustomerResponse
-                                                </th>
+                                                 <th>Sl</th>
+                                                <th style="color:red">Date</th>
+                                                 <th style="color:red">Campaign</th>
+                                                 <th style="color:red">CompanyName</th>
+                                                 <th style="color:red">ContactPersonName</th>
+                                                 <th style="color:red">Segment</th>
+                                                 <th style="color:red">LeadSource</th>
+                                                 <th style="color:red">City</th>
+                                                 <th style="color:red">ContactNumber</th>
+                                                 <th>ContactPersondesignation</th>
+                                                 <th>LandPhoneNo</th>
+                                                 <th>Email</th>
+                                                 <th>Website</th>
+                                                 <th>AssignedEmployee</th>
+                                                 <th>Priority</th>
+                                                 <th>Activity</th>
+                                                 <th>ActivityDescription</th>
+                                                 <th>CustomerResponse</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <asp:Repeater ID="rptuploaddetail" runat="server">
                                                 <ItemTemplate>
                                                     <tr>
+                                                        <td><%# Container.ItemIndex + 1 %></td>
+                                                        <td><asp:Label ID="lbldate" runat="server" Text='<%#Eval("Date")%>'></asp:Label></td>
+                                                        <td><asp:Label ID="lblCampaign" runat="server" Text='<%#Eval("Campaign")%>'></asp:Label></td>
+                                                        <td><asp:Label ID="lblCompanyName" runat="server" Text='<%#Eval("CompanyName")%>'></asp:Label></td>
+                                                        <td><asp:Label ID="lblContactPersonName" runat="server" Text='<%#Eval("ContactPersonName")%>'></asp:Label></td>
                                                         <td>
-                                                               <%# Container.ItemIndex + 1 %>
-                                                        </td>
-
-                                                        <td>
-                                                         <asp:Label ID="lbldate" runat="server" Text='<%#Eval("Date")%>'></asp:Label>
-                                                        </td>
-                                                         <td>
-                                                            <asp:Label ID="lblCampaign" runat="server" Text='<%#Eval("Campaign")%>'></asp:Label>
-                                                        </td>
-                                                        <td>
-                                                            <asp:Label ID="lblCompanyName" runat="server" Text='<%#Eval("CompanyName")%>'></asp:Label>
-                                                        </td>
-                                                        <td>
-                                                             <asp:Label ID="lblContactPersonName" runat="server" Text='<%#Eval("ContactPersonName")%>'></asp:Label>
-                                                        </td>
-                                                          <td>
                                                             <%#Eval("Segment")%>
                                                             <asp:HiddenField ID="hdnSegmentId" runat="server" Value='<%#Eval("SegmentId")%>' />
                                                         </td>
-                                                         <td>
+                                                        <td>
                                                             <%#Eval("LeadSource")%>
                                                             <asp:HiddenField ID="hdnLeadSourceId" runat="server" Value='<%#Eval("LeadSourceId")%>' />
                                                         </td>
-                                                         <td>
+                                                        <td>
                                                             <%#Eval("City")%>
                                                             <asp:HiddenField ID="hdnCityId" runat="server" Value='<%#Eval("CityId")%>' />
                                                         </td>
-                                                      
-                                                         <td> 
+                                                        <td> 
                                                              <%#Eval("CountryCodeContactNumber")%> <%#Eval("ContactNumber")%>
                                                              <asp:Label ID="lblCountryCodeContactNumber" Visible="false" runat="server" Text='<%#Eval("CountryCodeContactNumber")%>'></asp:Label>
-                                                             <asp:Label ID="lblContactNumber" runat="server"  Visible="false" Text='<%#Eval("ContactNumber")%>'></asp:Label>
+                                                             <asp:Label ID="lblContactNumber" runat="server" Visible="false" Text='<%#Eval("ContactNumber")%>'></asp:Label>
                                                         </td>
+                                                        <td><asp:Label ID="lblContactPersondesignation" runat="server" Text='<%#Eval("ContactPersondesignation")%>'></asp:Label></td>
                                                         <td>
-                                                             <asp:Label ID="lblContactPersondesignation" runat="server" Text='<%#Eval("ContactPersondesignation")%>'></asp:Label>
+                                                            <%#Eval("LandPhoneNoCountryCode")%> <%#Eval("LandPhoneNo")%>
+                                                            <asp:Label ID="lblLandPhoneNoCountryCode" Visible="false" runat="server" Text='<%#Eval("LandPhoneNoCountryCode")%>'></asp:Label>
+                                                            <asp:Label ID="lblLandPhoneNo" runat="server" Visible="false" Text='<%#Eval("LandPhoneNo")%>'></asp:Label>
                                                         </td>
-                                                      
-                                                        <td>
-                                                            <%#Eval("LandPhoneNoCountryCode")%>  <%#Eval("LandPhoneNo")%>
-                                                            <asp:Label ID="lblLandPhoneNoCountryCode"  Visible="false" runat="server" Text='<%#Eval("LandPhoneNoCountryCode")%>'></asp:Label>
-                                                             <asp:Label ID="lblLandPhoneNo" runat="server"  Visible="false" Text='<%#Eval("LandPhoneNo")%>'></asp:Label>
-                                                        </td>
-                                                           <td>
-                                                             <asp:Label ID="lblEmail" runat="server" Text='<%#Eval("Email")%>'></asp:Label>
-                                                        </td>
-                                                        <td>
-                                                             <asp:Label ID="lblWebsite" runat="server" Text='<%#Eval("Website")%>'></asp:Label>
-                                                        </td>
-                                                       
+                                                        <td><asp:Label ID="lblEmail" runat="server" Text='<%#Eval("Email")%>'></asp:Label></td>
+                                                        <td><asp:Label ID="lblWebsite" runat="server" Text='<%#Eval("Website")%>'></asp:Label></td>
                                                         <td>
                                                             <%#Eval("AssignedEmployee")%>
-                                                              <asp:HiddenField ID="hdnAssignedEmployeeId" runat="server" Value='<%#Eval("AssignedEmployeeId")%>' />
+                                                            <asp:HiddenField ID="hdnAssignedEmployeeId" runat="server" Value='<%#Eval("AssignedEmployeeId")%>' />
                                                         </td>
                                                         <td>
                                                             <%#Eval("Priority")%>
-                                                              <asp:HiddenField ID="hdnPriorityId" runat="server" Value='<%#Eval("PriorityId")%>' />
+                                                            <asp:HiddenField ID="hdnPriorityId" runat="server" Value='<%#Eval("PriorityId")%>' />
                                                         </td>
-                                                       
-                                                         <td>
-                                                             <asp:Label ID="lblActivity" runat="server" Text='<%#Eval("Activity")%>'></asp:Label>
-                                                        </td>
-                                                         <td>
-                                                             <asp:Label ID="lblActivityDescription" runat="server" Text='<%#Eval("ActivityDescription")%>'></asp:Label>
-                                                        </td>
-                                                         
-                                                         <td>
-                                                             <asp:Label ID="lblCustomerResponse" runat="server" Text='<%#Eval("CustomerResponse")%>'></asp:Label>
-                                                        </td>
+                                                        <td><asp:Label ID="lblActivity" runat="server" Text='<%#Eval("Activity")%>'></asp:Label></td>
+                                                        <td><asp:Label ID="lblActivityDescription" runat="server" Text='<%#Eval("ActivityDescription")%>'></asp:Label></td>
+                                                        <td><asp:Label ID="lblCustomerResponse" runat="server" Text='<%#Eval("CustomerResponse")%>'></asp:Label></td>
                                                     </tr>
                                                 </ItemTemplate>
                                             </asp:Repeater>
-
                                         </tbody>
                                     </table>
                                      <asp:Button ID="btnverfy" class="butn_save" OnClick="btnverfy_Click"
                                                     runat="server" Text="Verified and Save" />
-                                                       <asp:Button ID="btnverfyclose" class="butn_save" OnClick="btnverfyclose_Click"
+                                     <asp:Button ID="btnverfyclose" class="butn_save" OnClick="btnverfyclose_Click"
                                                     runat="server" Text="Close" />
-                                                      </ContentTemplate>
-                                               </asp:UpdatePanel>
-                                </td> 
-                                        </tr>
-                                       </table>
+                                    </ContentTemplate>
+                               </asp:UpdatePanel>
+                            </td> 
+                        </tr>
+                    </table>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
