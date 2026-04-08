@@ -23,12 +23,14 @@ namespace AmarCentre.CRM
         Master_Bal masterBAL = new Master_Bal();
         Transaction_Bal TransBal = new Transaction_Bal();
 
+        // ─────────────────────────────────────────────────────────────
+        // Page Load
+        // ─────────────────────────────────────────────────────────────
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
-            {
                 Response.Redirect("~/Landing.aspx");
-            }
+
             if (!IsPostBack)
             {
                 hdnUserId.Value = Session["User_Id"].ToString();
@@ -40,6 +42,9 @@ namespace AmarCentre.CRM
             }
         }
 
+        // ─────────────────────────────────────────────────────────────
+        // Dropdowns
+        // ─────────────────────────────────────────────────────────────
         public void FillDropdown()
         {
             DataSet ds = TransBal.drpforLead();
@@ -128,17 +133,25 @@ namespace AmarCentre.CRM
                 lbl_Code.Text = dt.Rows[0][0].ToString();
         }
 
+        // ─────────────────────────────────────────────────────────────
+        // Grid / List
+        // ─────────────────────────────────────────────────────────────
         public void fillgridList(int PageNumber, int PageSize, string Filter, string OrderByColumnName, string OrderBy)
         {
-            DataTable dtEmployeeList = TransBal.GetLeadList(PageNumber, PageSize, Filter,
+            DataTable dtEmployeeList = TransBal.GetLeadList(
+                PageNumber, PageSize, Filter,
                 drpStatusfilter.SelectedValue == "" ? 0 : Convert.ToInt32(drpStatusfilter.SelectedValue),
                 drpprorityfilter.SelectedValue == "" ? 0 : Convert.ToInt32(drpprorityfilter.SelectedValue),
                 Convert.ToInt32(hdnUserId.Value));
+
             rptList.DataSource = dtEmployeeList;
             rptList.DataBind();
+
             if (dtEmployeeList.Rows.Count > 0)
             {
-                lblPageInfo.Text = "Showing Results " + dtEmployeeList.Rows[0]["StartNumber"].ToString() + " - " + dtEmployeeList.Rows[dtEmployeeList.Rows.Count - 1]["RowNum"].ToString() + " Out of " + dtEmployeeList.Rows[0]["CurrentCount"].ToString() + " Records";
+                lblPageInfo.Text = "Showing Results " + dtEmployeeList.Rows[0]["StartNumber"].ToString()
+                    + " - " + dtEmployeeList.Rows[dtEmployeeList.Rows.Count - 1]["RowNum"].ToString()
+                    + " Out of " + dtEmployeeList.Rows[0]["CurrentCount"].ToString() + " Records";
                 hdnFilter.Value = dtEmployeeList.Rows[0]["Filter"].ToString();
                 hdnOrderByColumnName.Value = dtEmployeeList.Rows[0]["OrderByColumnName"].ToString();
                 hdnOrderBy.Value = dtEmployeeList.Rows[0]["OrderBy"].ToString();
@@ -148,7 +161,7 @@ namespace AmarCentre.CRM
             }
             else
             {
-                lblPageInfo.Text = "Showing Results " + 0 + " - " + 0 + " Out of " + 0 + " Records";
+                lblPageInfo.Text = "Showing Results 0 - 0 Out of 0 Records";
                 hdnFilter.Value = txtSearch.Text;
                 hdnLastPage.Value = "0";
                 lblPageNumber.Text = "1";
@@ -158,6 +171,9 @@ namespace AmarCentre.CRM
             UpdPanelList.Update();
         }
 
+        // ─────────────────────────────────────────────────────────────
+        // Excel Export
+        // ─────────────────────────────────────────────────────────────
         public void btnExportToExcelOnClick(object sender, EventArgs e)
         {
             DataTable dtEmployeeList = TransBal.GetLeadCreationListExcel(Convert.ToInt32(hdnUserId.Value));
@@ -173,6 +189,9 @@ namespace AmarCentre.CRM
             }
         }
 
+        // ─────────────────────────────────────────────────────────────
+        // Edit Lead (list item click)
+        // ─────────────────────────────────────────────────────────────
         protected void rptListOnItemCommand(object sender, RepeaterCommandEventArgs e)
         {
             Clear();
@@ -190,6 +209,7 @@ namespace AmarCentre.CRM
             txtphone.Text = dtBasic.Rows[0]["LandPhoneNo"].ToString();
             drpPriority.SelectedValue = dtBasic.Rows[0]["Priority"].ToString();
             txtcompany.Text = dtBasic.Rows[0]["CompanyName"].ToString();
+            txtCompanyName.Text = dtBasic.Rows[0]["CompanyName"].ToString(); // Company Name field
             txtResponse.Text = dtBasic.Rows[0]["CustomerResponse"].ToString();
             Followupdate.DbSelectedDate = dtBasic.Rows[0]["NextFollowupDate"].ToString();
             radFollowupTime.DbSelectedDate = dtBasic.Rows[0]["NextFollowupTime"].ToString();
@@ -205,30 +225,34 @@ namespace AmarCentre.CRM
             drpSegment.SelectedValue = dtBasic.Rows[0]["SegmentId"].ToString();
             drpCity.SelectedValue = dtBasic.Rows[0]["CityId"].ToString();
 
-            // NEW FIELDS - bind to controls
+            // New fields
             txtLeadBrand.Text = dtBasic.Rows[0]["LeadBrand"].ToString();
             txtPassportNo.Text = dtBasic.Rows[0]["PassportNo"].ToString();
-
             dpPassportIssueDate.DbSelectedDate = dtBasic.Rows[0]["PassportIssueDate"].ToString();
             dpPassportExpiryDate.DbSelectedDate = dtBasic.Rows[0]["PassportExpiryDate"].ToString();
             dpDOB.DbSelectedDate = dtBasic.Rows[0]["DOB"].ToString();
-
             drpCurrentStatus.SelectedValue = dtBasic.Rows[0]["CurrentStatus"].ToString();
             txtNationality.Text = dtBasic.Rows[0]["Nationality"].ToString();
             drpMaritalStatus.SelectedValue = dtBasic.Rows[0]["MaritalStatus"].ToString();
             txtMotherName.Text = dtBasic.Rows[0]["MotherName"].ToString();
 
+            // Employee dropdown
             drpEmployee.DataSource = TransBal.DrpEmployeeTrans(1);
             drpEmployee.DataValueField = "Value";
             drpEmployee.DataTextField = "Text";
             drpEmployee.DataBind();
             drpEmployee.SelectedValue = dtBasic.Rows[0]["AssignedEmployeeId"].ToString();
 
+            // Q&A service rows
             if (dtService.Rows.Count == 0)
                 dtService.Rows.Add(0, null);
             rptservice.DataSource = dtService;
             rptservice.DataBind();
 
+            // Load existing documents
+            LoadDocuments(Convert.ToInt32(hdnRptId.Value));
+
+            // Button visibility
             if (dtBasic.Rows[0]["isclosed"].ToString() == "1")
                 btnSave.Visible = btnCreateQutn.Visible = false;
             else
@@ -251,6 +275,9 @@ namespace AmarCentre.CRM
             UpdPanelAdd.Update();
         }
 
+        // ─────────────────────────────────────────────────────────────
+        // Q&A Repeater
+        // ─────────────────────────────────────────────────────────────
         protected void rptserviceOnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             RadComboBox drpDepartment = (RadComboBox)e.Item.FindControl("drpDepartment");
@@ -265,7 +292,8 @@ namespace AmarCentre.CRM
             drpDepartment.DataBind();
             drpDepartment.SelectedValue = hdnDepartmentId.Value;
 
-            DataSet ds = masterBAL.DrpQuestion123(hdnDepartmentId.Value == "" ? 0 : Convert.ToInt32(hdnDepartmentId.Value));
+            DataSet ds = masterBAL.DrpQuestion123(
+                hdnDepartmentId.Value == "" ? 0 : Convert.ToInt32(hdnDepartmentId.Value));
 
             drpSerCategory.Text = "";
             drpSerCategory.DataSource = ds.Tables[0];
@@ -275,9 +303,253 @@ namespace AmarCentre.CRM
             drpSerCategory.SelectedValue = hdnSerCategoryId.Value;
         }
 
+        protected void rptserviceOnItemCommand(object sender, RepeaterCommandEventArgs e)
+        {
+            DataTable dtService = new DataTable();
+            dtService.Columns.Add("Id", typeof(int));
+            dtService.Columns.Add("DepartmentId", typeof(int));
+            dtService.Columns.Add("CategoryId", typeof(int));
+
+            foreach (RepeaterItem itm in rptservice.Items)
+            {
+                HiddenField hdnDId = (HiddenField)itm.FindControl("hdnDId");
+                RadComboBox drpDepartment = (RadComboBox)itm.FindControl("drpDepartment");
+                RadComboBox drpSerCategory = (RadComboBox)itm.FindControl("drpSerCategory");
+
+                if (drpDepartment.SelectedValue != "" && drpSerCategory.SelectedValue != "")
+                    dtService.Rows.Add(
+                        Convert.ToInt32(hdnDId.Value),
+                        drpDepartment.SelectedValue == "" ? (int?)null : Convert.ToInt32(drpDepartment.SelectedValue),
+                        drpSerCategory.SelectedValue == "" ? (int?)null : Convert.ToInt32(drpSerCategory.SelectedValue));
+            }
+
+            if (e.CommandName == "Delete")
+            {
+                int indx = e.Item.ItemIndex;
+                if (indx < dtService.Rows.Count)
+                    dtService.Rows.RemoveAt(indx);
+            }
+            dtService.Rows.Add(0, null);
+
+            rptservice.DataSource = dtService;
+            rptservice.DataBind();
+            UpdService.Update();
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // ============================================================
+        // DOCUMENT UPLOAD SECTION
+        // ============================================================
+        // ─────────────────────────────────────────────────────────────
+
+        /// <summary>Returns a fresh empty DataTable matching LeadDocument structure.</summary>
+        private DataTable GetDocumentDataTable()
+        {
+            DataTable dtDoc = new DataTable();
+            dtDoc.Columns.Add("Id", typeof(int));
+            dtDoc.Columns.Add("DocumentId", typeof(int));
+            dtDoc.Columns.Add("Filenames", typeof(string));
+            dtDoc.Columns.Add("FilenameSave", typeof(string));
+            return dtDoc;
+        }
+
+        /// <summary>Load documents for a saved lead and bind the repeater.</summary>
+        private void LoadDocuments(int leadId)
+        {
+            DataTable dtDocs = TransBal.GetLeadDocuments(leadId);
+            if (dtDocs == null || dtDocs.Rows.Count == 0)
+            {
+                DataTable dtEmpty = GetDocumentDataTable();
+                dtEmpty.Rows.Add(0, DBNull.Value, "", "");
+                rptDocuments.DataSource = dtEmpty;
+            }
+            else
+            {
+                rptDocuments.DataSource = dtDocs;
+            }
+            rptDocuments.DataBind();
+            UpdDocUpload.Update();
+        }
+
+        /// <summary>Bind document type dropdown and set selected value for each row.</summary>
+        protected void rptDocumentsOnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType != ListItemType.Item &&
+                e.Item.ItemType != ListItemType.AlternatingItem)
+                return;
+
+            RadComboBox drpDocumentType = (RadComboBox)e.Item.FindControl("drpDocumentType");
+            HiddenField hdnDocumentId = (HiddenField)e.Item.FindControl("hdnDocumentId");
+            HiddenField hdnFileName = (HiddenField)e.Item.FindControl("hdnFileName");
+            Button btnDocDownload = (Button)e.Item.FindControl("btnDocDownload");
+
+            // Use existing fill_drp_DocType() from Master_Bal (calls drp_DocType SP)
+            DataTable dtDocTypes = masterBAL.fill_drp_DocType();
+            drpDocumentType.DataSource = dtDocTypes;
+            drpDocumentType.DataTextField = "Text";
+            drpDocumentType.DataValueField = "Value";
+            drpDocumentType.DataBind();
+
+            if (hdnDocumentId.Value != "" && hdnDocumentId.Value != "0")
+            {
+                try { drpDocumentType.SelectedValue = hdnDocumentId.Value; }
+                catch { }
+            }
+
+            // Show download button only when a file is attached
+            if (btnDocDownload != null)
+                btnDocDownload.Visible = hdnFileName.Value != "";
+        }
+
+        /// <summary>Handle Add / Delete / Download commands in the document repeater.</summary>
+        protected void rptDocumentsOnItemCommand(object sender, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "Download")
+            {
+                HiddenField hdnFileNameSave = (HiddenField)e.Item.FindControl("hdnFileNameSave");
+                HiddenField hdnFileName = (HiddenField)e.Item.FindControl("hdnFileName");
+
+                if (hdnFileNameSave.Value != "")
+                {
+                    string filePath = Server.MapPath("~/UploadedFiles/" + hdnFileNameSave.Value);
+                    if (File.Exists(filePath))
+                    {
+                        Response.ContentType = "APPLICATION/OCTET-STREAM";
+                        Response.AppendHeader("Content-Disposition",
+                            "Attachment; Filename=\"" + hdnFileName.Value + "\"");
+                        Response.WriteFile(filePath);
+                        Response.End();
+                    }
+                }
+                return;
+            }
+
+            // Collect current rows
+            DataTable dtDoc = CollectDocumentRows();
+
+            if (e.CommandName == "Delete")
+            {
+                // Delete from DB if it is an existing saved row
+                HiddenField hdnDocId = (HiddenField)e.Item.FindControl("hdnDocId");
+                if (hdnDocId != null &&
+                    hdnDocId.Value != "0" && hdnDocId.Value != "" &&
+                    hdnId.Value != "0")
+                {
+                    try
+                    {
+                        TransBal.DeleteLeadDocument(
+                            Convert.ToInt32(hdnDocId.Value),
+                            Convert.ToInt32(hdnUserId.Value));
+                    }
+                    catch { }
+                }
+
+                int indx = e.Item.ItemIndex;
+                if (indx < dtDoc.Rows.Count)
+                    dtDoc.Rows.RemoveAt(indx);
+
+                // Always keep at least one empty row
+                if (dtDoc.Rows.Count == 0)
+                    dtDoc.Rows.Add(0, DBNull.Value, "", "");
+            }
+            else if (e.CommandName == "Add")
+            {
+                dtDoc.Rows.Add(0, DBNull.Value, "", "");
+            }
+
+            rptDocuments.DataSource = dtDoc;
+            rptDocuments.DataBind();
+            UpdDocUpload.Update();
+        }
+
+        /// <summary>Read all document repeater rows into a DataTable.</summary>
+        public DataTable CollectDocumentRows()
+        {
+            DataTable dtDoc = GetDocumentDataTable();
+
+            foreach (RepeaterItem itm in rptDocuments.Items)
+            {
+                if (itm.ItemType != ListItemType.Item &&
+                    itm.ItemType != ListItemType.AlternatingItem)
+                    continue;
+
+                HiddenField hdnDocId = (HiddenField)itm.FindControl("hdnDocId");
+                RadComboBox drpDocType = (RadComboBox)itm.FindControl("drpDocumentType");
+                HiddenField hdnFileName = (HiddenField)itm.FindControl("hdnFileName");
+                HiddenField hdnFileNameSave = (HiddenField)itm.FindControl("hdnFileNameSave");
+
+                dtDoc.Rows.Add(
+                    Convert.ToInt32(string.IsNullOrEmpty(hdnDocId.Value) ? "0" : hdnDocId.Value),
+                    drpDocType.SelectedValue == "" ? (object)DBNull.Value : Convert.ToInt32(drpDocType.SelectedValue),
+                    hdnFileName.Value,
+                    hdnFileNameSave.Value);
+            }
+            return dtDoc;
+        }
+
+        /// <summary>Handle async file upload for document rows.</summary>
+        public void fuDocFileOnFileUploaded(object sender, FileUploadedEventArgs e)
+        {
+            RadAsyncUpload fuDocFile = (RadAsyncUpload)sender;
+            fuDocFile.TargetFolder = "~/UploadedFiles";
+
+            string prefix = "LD-";
+            string savedName = prefix + e.File.GetNameWithoutExtension() + e.File.GetExtension();
+            string originalName = e.File.GetName();
+
+            e.File.SaveAs(Path.Combine(Server.MapPath(fuDocFile.TargetFolder), savedName));
+
+            // Walk up to the RepeaterItem to update hidden fields & label
+            Control parent = fuDocFile.Parent;
+            while (parent != null && !(parent is RepeaterItem))
+                parent = parent.Parent;
+
+            if (parent is RepeaterItem item)
+            {
+                UpdatePanel updDocFile = (UpdatePanel)item.FindControl("UpdDocFile");
+                HiddenField hdnFileName = (HiddenField)item.FindControl("hdnFileName");
+                HiddenField hdnFileNameSave = (HiddenField)item.FindControl("hdnFileNameSave");
+                Label lblFileName = (Label)item.FindControl("lblFileName");
+                Button btnDocDownload = (Button)item.FindControl("btnDocDownload");
+
+                hdnFileName.Value = originalName;
+                hdnFileNameSave.Value = savedName;
+
+                if (lblFileName != null)
+                {
+                    lblFileName.Text = originalName;
+                    lblFileName.Visible = true;
+                }
+                if (btnDocDownload != null)
+                    btnDocDownload.Visible = true;
+
+                if (updDocFile != null)
+                    updDocFile.Update();
+            }
+
+            // Backup copy
+            try
+            {
+                DataTable dtgen = masterBAL.Edit_GeneralSettings();
+                string backupPath = dtgen.Rows[0]["BackupDrivePath"].ToString() + "UploadedFiles";
+                if (Directory.Exists(backupPath))
+                {
+                    File.Copy(
+                        Path.Combine(Server.MapPath(fuDocFile.TargetFolder), savedName),
+                        Path.Combine(backupPath, savedName),
+                        false);
+                }
+            }
+            catch { }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // Dropdown Change Events
+        // ─────────────────────────────────────────────────────────────
         protected void drpStatusfilterOnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            fillgridList(1, Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
+            fillgridList(1, Convert.ToInt32(drpPageSize.SelectedValue),
+                hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
         }
 
         protected void drpSource_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -287,7 +559,8 @@ namespace AmarCentre.CRM
                 int val = systemUtilities.Form_Previlage_Validation(133, Convert.ToInt32(hdnUserId.Value));
                 if (val == 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Message", "alert('Sorry you do not have privilege to create new lead source..!');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Message",
+                        "alert('Sorry you do not have privilege to create new lead source..!');", true);
                     drpSource.ClearSelection();
                     updSource.Update();
                 }
@@ -300,9 +573,7 @@ namespace AmarCentre.CRM
             }
         }
 
-        protected void drpJurisdiction_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-        }
+        protected void drpJurisdiction_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e) { }
 
         protected void drpSegment_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
@@ -331,7 +602,8 @@ namespace AmarCentre.CRM
                 int val = systemUtilities.Form_Previlage_Validation(134, Convert.ToInt32(hdnUserId.Value));
                 if (val == 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Message", "alert('Sorry you do not have privilege to create new Priority..!');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Message",
+                        "alert('Sorry you do not have privilege to create new Priority..!');", true);
                     drpPriority.ClearSelection();
                     updPriority.Update();
                 }
@@ -344,56 +616,10 @@ namespace AmarCentre.CRM
             }
         }
 
-        protected void rptserviceOnItemCommand(object sender, RepeaterCommandEventArgs e)
-        {
-            DataTable dtService = new DataTable();
-            dtService.Columns.Add("Id", typeof(int));
-            dtService.Columns.Add("DepartmentId", typeof(int));
-            dtService.Columns.Add("CategoryId", typeof(int));
-
-            foreach (RepeaterItem itm in rptservice.Items)
-            {
-                HiddenField hdnDId = (HiddenField)itm.FindControl("hdnDId");
-                RadComboBox drpDepartment = (RadComboBox)itm.FindControl("drpDepartment");
-                RadComboBox drpSerCategory = (RadComboBox)itm.FindControl("drpSerCategory");
-
-                if (drpDepartment.SelectedValue != "" && drpSerCategory.SelectedValue != "")
-                    dtService.Rows.Add(
-                        Convert.ToInt32(hdnDId.Value),
-                        drpDepartment.SelectedValue == "" ? (int?)null : Convert.ToInt32(drpDepartment.SelectedValue),
-                        drpSerCategory.SelectedValue == "" ? (int?)null : Convert.ToInt32(drpSerCategory.SelectedValue));
-            }
-            if (e.CommandName == "Delete")
-            {
-                int indx = e.Item.ItemIndex;
-                if (indx < dtService.Rows.Count)
-                    dtService.Rows.RemoveAt(indx);
-            }
-            dtService.Rows.Add(0, null);
-
-            rptservice.DataSource = dtService;
-            rptservice.DataBind();
-            UpdService.Update();
-        }
-
-        protected void btnanwser_Click(object sender, EventArgs e)
-        {
-            pnlAnswer.Visible = true;
-            UCAnswer.UCPageLoad();
-            updAnswer.Update();
-        }
-
-        protected void btnQn_Click(object sender, EventArgs e)
-        {
-            pnlQuestion.Visible = true;
-            UCQuestion.UCPageLoad();
-            updQuestion.Update();
-        }
-
         protected void drpFilterOnSelectedIndexChanged(object sender, EventArgs e)
         {
             Control sendercontrol = (Control)sender;
-            String contrlName = sendercontrol.ID;
+            string contrlName = sendercontrol.ID;
 
             RepeaterItem itemrp = (RepeaterItem)sendercontrol.NamingContainer;
             UpdatePanel UpdSerCategoryDropdown = (UpdatePanel)itemrp.FindControl("UpdSerCategoryDropdown");
@@ -424,19 +650,41 @@ namespace AmarCentre.CRM
             UpdSerCategoryDropdown.Update();
         }
 
+        // ─────────────────────────────────────────────────────────────
+        // Add New Answer / Question
+        // ─────────────────────────────────────────────────────────────
+        protected void btnanwser_Click(object sender, EventArgs e)
+        {
+            pnlAnswer.Visible = true;
+            UCAnswer.UCPageLoad();
+            updAnswer.Update();
+        }
+
+        protected void btnQn_Click(object sender, EventArgs e)
+        {
+            pnlQuestion.Visible = true;
+            UCQuestion.UCPageLoad();
+            updQuestion.Update();
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // Save / Mail / Quotation
+        // ─────────────────────────────────────────────────────────────
         protected void btnMailOnClick(object sender, EventArgs e)
         {
             int res = 0;
             if (hdnId.Value == "0")
             {
                 res = SaveLead();
-                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
+                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue),
+                    hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
                 Clear();
             }
             else if (hdnStatus.Value != "3")
             {
                 res = SaveLead();
-                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
+                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue),
+                    hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
                 Clear();
             }
             else
@@ -454,7 +702,6 @@ namespace AmarCentre.CRM
                 lbl_msg.Text = "Sorry Failed to Process Your Request. ";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "ToggleDiv();", true);
             }
-
             UpdPanelAdd.Update();
         }
 
@@ -463,7 +710,8 @@ namespace AmarCentre.CRM
             int res = SaveLead();
             if (res > 0)
             {
-                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
+                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue),
+                    hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
                 Clear();
                 lbl_msg.Text = "Saved Successfully !..";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "ToggleDiv();", true);
@@ -479,12 +727,13 @@ namespace AmarCentre.CRM
                 lbl_msg.Text = "Sorry Failed to Process Your Request !..";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "ToggleDiv();", true);
             }
-
             UpdPanelAdd.Update();
         }
 
+        /// <summary>Core save method. Returns lead Id on success, 0 on failure, -1 if Q&A missing.</summary>
         public int SaveLead()
         {
+            // ── Q&A service table ──────────────────────────────────────
             DataTable dtService = new DataTable();
             dtService.Columns.Add("Id", typeof(int));
             dtService.Columns.Add("DepartmentId", typeof(int));
@@ -507,7 +756,6 @@ namespace AmarCentre.CRM
                         (int?)null, (int?)null, 0);
             }
 
-            // Resolve new dropdown values (nullable int)
             int? currentStatusVal = drpCurrentStatus.SelectedValue == "" ? (int?)null : Convert.ToInt32(drpCurrentStatus.SelectedValue);
             int? maritalStatusVal = drpMaritalStatus.SelectedValue == "" ? (int?)null : Convert.ToInt32(drpMaritalStatus.SelectedValue);
 
@@ -538,7 +786,7 @@ namespace AmarCentre.CRM
                 txtCountryCodeLPN.Text,
                 drpCity.SelectedValue == "" ? (int?)null : Convert.ToInt32(drpCity.SelectedValue),
                 drpSegment.SelectedValue == "" ? (int?)null : Convert.ToInt32(drpSegment.SelectedValue),
-                // NEW FIELDS
+                // New fields
                 txtLeadBrand.Text,
                 txtPassportNo.Text,
                 dpPassportIssueDate.SelectedDate,
@@ -550,6 +798,30 @@ namespace AmarCentre.CRM
                 txtMotherName.Text
             );
 
+            // ── Save documents after lead is saved ─────────────────────
+            if (res > 0)
+            {
+                DataTable dtDocAll = CollectDocumentRows();
+                DataTable dtDocToSave = GetDocumentDataTable();
+
+                foreach (DataRow row in dtDocAll.Rows)
+                {
+                    // Only save rows that have a file attached
+                    if (row["FilenameSave"].ToString() != "")
+                        dtDocToSave.ImportRow(row);
+                }
+
+                if (dtDocToSave.Rows.Count > 0)
+                {
+                    try
+                    {
+                        TransBal.SaveLeadDocuments(res, dtDocToSave,
+                            Convert.ToInt32(hdnUserId.Value));
+                    }
+                    catch { }
+                }
+            }
+
             return res;
         }
 
@@ -560,10 +832,13 @@ namespace AmarCentre.CRM
 
         protected void btnDeleteOnClick(object sender, EventArgs e)
         {
-            int res = TransBal.DeleteLeadCreation(Convert.ToInt32(hdnId.Value), Convert.ToInt32(hdnUserId.Value));
+            int res = TransBal.DeleteLeadCreation(
+                Convert.ToInt32(hdnId.Value), Convert.ToInt32(hdnUserId.Value));
+
             if (res == 1)
             {
-                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
+                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue),
+                    hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
                 Clear();
                 lbl_msg.Text = "Deleted Successfully !..";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "ToggleDiv();", true);
@@ -599,8 +874,70 @@ namespace AmarCentre.CRM
             UpdPanelAdd.Update();
         }
 
-        #region excel upload
+        // ─────────────────────────────────────────────────────────────
+        // Clear
+        // ─────────────────────────────────────────────────────────────
+        public void Clear()
+        {
+            hdnId.Value = "0";
+            txtName.Text = "";
+            txtAddress.Text = txtResponse.Text = "";
+            txtEmailId.Text = txtcompany.Text = "";
+            txtCompanyName.Text = "";
+            txtMobileNumber.Text = txtphone.Text = "";
+            drpEmployee.ClearSelection(); drpEmployee.Text = "";
+            drpPriority.ClearSelection(); drpPriority.Text = "";
+            drpSource.ClearSelection(); drpSource.Text = "";
+            drpJurisdiction.ClearSelection();
+            drpJurisdiction.Text = txtActivity.Text = txtCPDesig.Text = txtwebsite.Text = "";
+            Followupdate.DbSelectedDate = ApprxClosingDate.DbSelectedDate = "";
+            radFollowupTime.SelectedDate = null;
+            Followupdate.MinDate = DateTime.Now.AddDays(-365);
+            leadDate.SelectedDate = DateTime.Now;
+            txtCountryCodeCN.Text = "+971";
+            txtCampaign.Text = txtCountryCodeLPN.Text = "";
+            drpCity.ClearSelection(); drpCity.Text = "";
+            drpSegment.ClearSelection(); drpSegment.Text = "";
 
+            // New fields
+            txtLeadBrand.Text = "";
+            txtPassportNo.Text = "";
+            dpPassportIssueDate.DbSelectedDate = "";
+            dpPassportExpiryDate.DbSelectedDate = "";
+            drpCurrentStatus.SelectedIndex = 0;
+            dpDOB.DbSelectedDate = "";
+            txtNationality.Text = "";
+            drpMaritalStatus.SelectedIndex = 0;
+            txtMotherName.Text = "";
+
+            // Q&A
+            DataTable dtService = new DataTable();
+            dtService.Columns.Add("Id", typeof(int));
+            dtService.Columns.Add("DepartmentId", typeof(int));
+            dtService.Columns.Add("CategoryId", typeof(int));
+            dtService.Rows.Add(0, null);
+            rptservice.DataSource = dtService;
+            rptservice.DataBind();
+
+            // Documents – reset to one empty row
+            DataTable dtDoc = GetDocumentDataTable();
+            dtDoc.Rows.Add(0, DBNull.Value, "", "");
+            rptDocuments.DataSource = dtDoc;
+            rptDocuments.DataBind();
+
+            btnDelete.Visible = false;
+            btnHistory.Visible = false;
+            btnCreateQutn.Visible = false;
+            btnSave.Visible = hdnAdd.Value == "0" ? false : true;
+            btnMail.Visible = hdnSendMail.Value == "0" ? false : true;
+
+            Get_Code();
+            UpdPanelAddInner.Update();
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // Excel Upload
+        // ─────────────────────────────────────────────────────────────
         protected void btnupload_Click(object sender, EventArgs e)
         {
             pnlupload.Visible = true;
@@ -652,14 +989,16 @@ namespace AmarCentre.CRM
                 HiddenField hdnCityId = (HiddenField)itm.FindControl("hdnCityId");
                 HiddenField hdnSegmentId = (HiddenField)itm.FindControl("hdnSegmentId");
 
-                if (lbldate.Text != "" && lblCompanyName.Text != "" && lblCampaign.Text != "" && lblContactPersonName.Text != "")
+                if (lbldate.Text != "" && lblCompanyName.Text != "" &&
+                    lblCampaign.Text != "" && lblContactPersonName.Text != "")
                     ContentTable.Rows.Add(
                         Convert.ToDateTime(lbldate.Text),
                         lblCampaign.Text, lblCompanyName.Text, lblContactPersonName.Text,
-                        lblCountryCodeContactNumber.Text, lblContactNumber.Text, lblContactPersondesignation.Text,
-                        lblLandPhoneNoCountryCode.Text, lblLandPhoneNo.Text, lblEmail.Text,
-                        lblWebsite.Text, lblActivity.Text, lblActivityDescription.Text,
-                        lblCustomerResponse.Text,
+                        lblCountryCodeContactNumber.Text, lblContactNumber.Text,
+                        lblContactPersondesignation.Text,
+                        lblLandPhoneNoCountryCode.Text, lblLandPhoneNo.Text,
+                        lblEmail.Text, lblWebsite.Text, lblActivity.Text,
+                        lblActivityDescription.Text, lblCustomerResponse.Text,
                         hdnLeadSourceId.Value == "" ? (int?)null : Convert.ToInt32(hdnLeadSourceId.Value),
                         hdnAssignedEmployeeId.Value == "" ? (int?)null : Convert.ToInt32(hdnAssignedEmployeeId.Value),
                         hdnPriorityId.Value == "" ? (int?)null : Convert.ToInt32(hdnPriorityId.Value),
@@ -670,7 +1009,8 @@ namespace AmarCentre.CRM
             int res = TransBal.InsertLeadList(ContentTable, Convert.ToInt32(hdnUserId.Value));
             if (res > 0)
             {
-                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
+                fillgridList(Convert.ToInt32(lblPageNumber.Text), Convert.ToInt32(drpPageSize.SelectedValue),
+                    hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
                 Clear();
                 lbl_msg.Text = "Saved Successfully !..";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "ToggleDiv();", true);
@@ -696,20 +1036,20 @@ namespace AmarCentre.CRM
                 string fil_name = "LeadUploadFormat.xls";
                 string full_name = Server.MapPath("~/UploadedFiles/" + fil_name);
                 Response.ContentType = "APPLICATION/OCTET-STREAM";
-                String Header = "Attachment; Filename=\"" + fil_name + "\"";
-                Response.AppendHeader("Content-Disposition", Header);
+                Response.AppendHeader("Content-Disposition", "Attachment; Filename=\"" + fil_name + "\"");
                 System.IO.FileInfo Dfile = new System.IO.FileInfo(Server.MapPath("~/UploadedFiles/" + fil_name));
                 Response.WriteFile(Dfile.FullName);
                 Response.End();
             }
-            catch (Exception ex) { }
+            catch { }
         }
 
         public void fu_DocUpload_OnFileUploaded(object sender, FileUploadedEventArgs e)
         {
             fu_DocUpload.TargetFolder = "~/UploadedFiles";
             string Prefix = "F-";
-            string files_name = hdnleadFile.Value = Prefix + e.File.GetNameWithoutExtension().ToString() + e.File.GetExtension();
+            string files_name = hdnleadFile.Value =
+                Prefix + e.File.GetNameWithoutExtension().ToString() + e.File.GetExtension();
             e.File.SaveAs(Path.Combine(Server.MapPath(fu_DocUpload.TargetFolder), files_name));
 
             try
@@ -720,7 +1060,7 @@ namespace AmarCentre.CRM
                     Path.Combine(dtgen.Rows[0]["BackupDrivePath"].ToString() + "UploadedFiles", files_name),
                     false);
             }
-            catch (Exception cc) { }
+            catch { }
 
             hdnleadfileExtension.Value = e.File.GetExtension();
             updleadFile.Update();
@@ -748,6 +1088,7 @@ namespace AmarCentre.CRM
             ContentTable.Columns.Add("Activity", typeof(string));
             ContentTable.Columns.Add("ActivityDescription", typeof(string));
             ContentTable.Columns.Add("CustomerResponse", typeof(string));
+
             rptuploaddetail.DataSource = null;
             rptuploaddetail.DataBind();
 
@@ -756,7 +1097,8 @@ namespace AmarCentre.CRM
                 string connString = "";
                 string filepath = Path.Combine(Server.MapPath("~/UploadedFiles"), hdnleadFile.Value);
                 if (hdnleadfileExtension.Value == ".xls")
-                    connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filepath + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1;TypeGuessRows=0\"";
+                    connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filepath
+                        + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1;TypeGuessRows=0\"";
 
                 OleDbConnection OledbConn = new OleDbConnection(connString);
                 try
@@ -775,19 +1117,31 @@ namespace AmarCentre.CRM
                             try
                             {
                                 ContentTable.Rows.Add(
-                                    dr["Date"].ToString().Trim() == string.Empty ? (DateTime?)null : Convert.ToDateTime(dr["Date"].ToString().Trim()),
-                                    dr["Campaign"].ToString().Trim(), dr["CompanyName"].ToString().Trim(), dr["ContactPersonName"].ToString().Trim(),
-                                    dr["Segment"].ToString().Trim(), dr["LeadSource"].ToString().Trim(), dr["City"].ToString().Trim(),
-                                    dr["CountryCodeContactNumber"].ToString().Trim(), dr["ContactNumber"].ToString().Trim(),
-                                    dr["ContactPersondesignation"].ToString().Trim(), dr["LandPhoneNoCountryCode"].ToString().Trim(),
-                                    dr["LandPhoneNo"].ToString().Trim(), dr["Email"].ToString().Trim(), dr["Website"].ToString().Trim(),
-                                    dr["AssignedEmployee"].ToString().Trim(), dr["Priority"].ToString().Trim(),
-                                    dr["Activity"].ToString().Trim(), dr["ActivityDescription"].ToString().Trim(),
+                                    dr["Date"].ToString().Trim() == string.Empty
+                                        ? (DateTime?)null : Convert.ToDateTime(dr["Date"].ToString().Trim()),
+                                    dr["Campaign"].ToString().Trim(),
+                                    dr["CompanyName"].ToString().Trim(),
+                                    dr["ContactPersonName"].ToString().Trim(),
+                                    dr["Segment"].ToString().Trim(),
+                                    dr["LeadSource"].ToString().Trim(),
+                                    dr["City"].ToString().Trim(),
+                                    dr["CountryCodeContactNumber"].ToString().Trim(),
+                                    dr["ContactNumber"].ToString().Trim(),
+                                    dr["ContactPersondesignation"].ToString().Trim(),
+                                    dr["LandPhoneNoCountryCode"].ToString().Trim(),
+                                    dr["LandPhoneNo"].ToString().Trim(),
+                                    dr["Email"].ToString().Trim(),
+                                    dr["Website"].ToString().Trim(),
+                                    dr["AssignedEmployee"].ToString().Trim(),
+                                    dr["Priority"].ToString().Trim(),
+                                    dr["Activity"].ToString().Trim(),
+                                    dr["ActivityDescription"].ToString().Trim(),
                                     dr["CustomerResponse"].ToString().Trim());
                             }
                             catch (Exception ex1)
                             {
-                                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('" + ex1.Message + "');", true);
+                                ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
+                                    "alert('" + ex1.Message + "');", true);
                             }
                         }
                     }
@@ -796,12 +1150,14 @@ namespace AmarCentre.CRM
                 }
                 catch (Exception ex)
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Please upload the correct file format');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
+                        "alert('Please upload the correct file format');", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Please upload the file');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
+                    "alert('Please upload the file');", true);
             }
 
             if (ContentTable.Rows.Count > 0)
@@ -815,11 +1171,13 @@ namespace AmarCentre.CRM
                     rptuploaddetail.DataSource = restble;
                     rptuploaddetail.DataBind();
                     if (msg != "")
-                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('" + msg + "');", true);
+                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
+                            "alert('" + msg + "');", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Sorry failed to process your request. Try again');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
+                        "alert('Sorry failed to process your request. Try again');", true);
                 }
             }
             updleadFileList.Update();
@@ -831,62 +1189,9 @@ namespace AmarCentre.CRM
             UpdPanelAdd.Update();
         }
 
-        #endregion
-
-        public void Clear()
-        {
-            hdnId.Value = "0";
-            txtName.Text = "";
-            txtAddress.Text = txtResponse.Text = "";
-            txtEmailId.Text = txtcompany.Text = "";
-            txtMobileNumber.Text = txtphone.Text = "";
-            drpEmployee.ClearSelection();
-            drpEmployee.Text = "";
-            drpPriority.ClearSelection();
-            drpPriority.Text = "";
-            drpSource.ClearSelection();
-            drpSource.Text = "";
-            drpJurisdiction.ClearSelection();
-            drpJurisdiction.Text = txtActivity.Text = txtCPDesig.Text = txtwebsite.Text = "";
-            Followupdate.DbSelectedDate = ApprxClosingDate.DbSelectedDate = "";
-            radFollowupTime.SelectedDate = null;
-            Followupdate.MinDate = DateTime.Now.AddDays(-365);
-            leadDate.SelectedDate = DateTime.Now;
-            txtCountryCodeCN.Text = "+971";
-            txtCampaign.Text = txtCountryCodeLPN.Text = "";
-            drpCity.ClearSelection();
-            drpCity.Text = "";
-            drpSegment.ClearSelection();
-            drpSegment.Text = "";
-
-            // NEW FIELDS - clear
-            txtLeadBrand.Text = "";
-            txtPassportNo.Text = "";
-            dpPassportIssueDate.DbSelectedDate = "";
-            dpPassportExpiryDate.DbSelectedDate = "";
-            drpCurrentStatus.SelectedIndex = 0;
-            dpDOB.DbSelectedDate = "";
-            txtNationality.Text = "";
-            drpMaritalStatus.SelectedIndex = 0;
-            txtMotherName.Text = "";
-
-            DataTable dtService = new DataTable();
-            dtService.Columns.Add("Id", typeof(int));
-            dtService.Columns.Add("DepartmentId", typeof(int));
-            dtService.Columns.Add("CategoryId", typeof(int));
-            dtService.Rows.Add(0, null);
-            rptservice.DataSource = dtService;
-            rptservice.DataBind();
-
-            btnDelete.Visible = btnHistory.Visible = btnCreateQutn.Visible = false;
-            btnSave.Visible = hdnAdd.Value == "0" ? false : true;
-            btnMail.Visible = hdnSendMail.Value == "0" ? false : true;
-            Get_Code();
-            UpdPanelAddInner.Update();
-        }
-
-        #region History
-
+        // ─────────────────────────────────────────────────────────────
+        // History
+        // ─────────────────────────────────────────────────────────────
         protected void btn_excelhis_OnClick(object sender, EventArgs e)
         {
             DataTable dt = TransBal.ListLeadHistoryPrintExcel(Convert.ToInt32(hdnId.Value));
@@ -906,7 +1211,8 @@ namespace AmarCentre.CRM
         {
             string url = "../CRM/LeadHistory.aspx?LeadId=" + Convert.ToInt32(hdnId.Value);
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "NewWindow",
-                "window.open('" + url + "','_blank','height=600,width=900,status=no,toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,titlebar=no' );", true);
+                "window.open('" + url + "','_blank','height=600,width=900,status=no,toolbar=no,menubar=no," +
+                "location=no,scrollbars=no,resizable=no,titlebar=no' );", true);
         }
 
         protected void btnhistrymainOnClick(object sender, EventArgs e)
@@ -930,7 +1236,9 @@ namespace AmarCentre.CRM
 
             if (dt.Rows.Count > 0)
             {
-                lbl_page_info1.Text = "Showing Results " + dt.Rows[0]["StartNumber"].ToString() + " - " + dt.Rows[dt.Rows.Count - 1]["RowNum"].ToString() + " Out of " + dt.Rows[0]["CurrentCount"].ToString() + " Records";
+                lbl_page_info1.Text = "Showing Results " + dt.Rows[0]["StartNumber"].ToString()
+                    + " - " + dt.Rows[dt.Rows.Count - 1]["RowNum"].ToString()
+                    + " Out of " + dt.Rows[0]["CurrentCount"].ToString() + " Records";
                 hdn_last_page1.Value = dt.Rows[0]["LastPage"].ToString();
                 lbl_page_number1.Text = dt.Rows[0]["PageNumber"].ToString();
                 hdn_total1.Value = dt.Rows[0]["CurrentCount"].ToString();
@@ -946,7 +1254,7 @@ namespace AmarCentre.CRM
             Upd_History.Update();
         }
 
-        #region his Navigation
+        #region History Navigation
         protected void btn_first1_OnClick(object sender, EventArgs e) { grid_fill_his(1, Convert.ToInt32(drp_count1.SelectedValue)); }
         protected void btn_prev1_OnClick(object sender, EventArgs e)
         {
@@ -962,13 +1270,13 @@ namespace AmarCentre.CRM
         protected void drp_count1_OnSelectedIndexChanged(object sender, EventArgs e) { grid_fill_his(1, Convert.ToInt32(drp_count1.SelectedValue)); }
         #endregion
 
-        #endregion
-
-        #region Navigation
-
+        // ─────────────────────────────────────────────────────────────
+        // List Navigation
+        // ─────────────────────────────────────────────────────────────
         protected void txtSearchOnTextChanged(object sender, EventArgs e)
         {
-            fillgridList(1, Convert.ToInt32(drpPageSize.SelectedValue), txtSearch.Text, hdnOrderByColumnName.Value, hdnOrderBy.Value);
+            fillgridList(1, Convert.ToInt32(drpPageSize.SelectedValue),
+                txtSearch.Text, hdnOrderByColumnName.Value, hdnOrderBy.Value);
         }
         protected void btnFirstOnClick(object sender, EventArgs e) { fillgridList(1, Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value); }
         protected void btnPreviousOnClick(object sender, EventArgs e)
@@ -984,8 +1292,9 @@ namespace AmarCentre.CRM
         protected void btnLastOnClick(object sender, EventArgs e) { fillgridList(Convert.ToInt32(hdnLastPage.Value), Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value); }
         protected void drpPageSizeOnSelectedIndexChanged(object sender, EventArgs e) { fillgridList(1, Convert.ToInt32(drpPageSize.SelectedValue), hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value); }
 
-        #endregion
-
+        // ─────────────────────────────────────────────────────────────
+        // Privilege Checks
+        // ─────────────────────────────────────────────────────────────
         public void CheckPrivilege()
         {
             try

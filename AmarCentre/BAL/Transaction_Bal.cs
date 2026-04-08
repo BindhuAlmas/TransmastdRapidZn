@@ -2068,6 +2068,41 @@ namespace AmarCentre.BAL
             return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
         }
 
+
+        /// <summary>Fetch all document rows saved against a lead.</summary>
+        public DataTable GetLeadDocuments(int LeadId)
+        {
+            Database_Operations db_obj = new Database_Operations("GetLeadDocuments", true);
+            db_obj.AddParameter("@LeadId", LeadId);
+            return db_obj.GetDataTable();
+        }
+
+        /// <summary>
+        /// Save (insert new / update existing) document rows for a lead.
+        /// Uses the LeadDocumentType table-valued parameter.
+        /// </summary>
+        public int SaveLeadDocuments(int LeadId, DataTable dtDocuments, int UserId)
+        {
+            Database_Operations db_obj = new Database_Operations("SaveLeadDocuments", true);
+            db_obj.AddParameter("@LeadId", LeadId);
+            db_obj.AddParameter("@dtDocuments", dtDocuments);   // TVP – LeadDocumentType
+            db_obj.AddParameter("@UserId", UserId);
+            db_obj.AddOutputParameter("@Result");
+            db_obj.ExecuteQuery();
+            return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
+        }
+
+        /// <summary>Delete a single document record by Id.</summary>
+        public int DeleteLeadDocument(int Id, int UserId)
+        {
+            Database_Operations db_obj = new Database_Operations("DeleteLeadDocument", true);
+            db_obj.AddParameter("@Id", Id);
+            db_obj.AddParameter("@UserId", UserId);
+            db_obj.AddOutputParameter("@Result");
+            db_obj.ExecuteQuery();
+            return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
+        }
+
         #endregion
 
         #region LeadTransfer
