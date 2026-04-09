@@ -420,15 +420,6 @@ namespace AmarCentre.CRM
         protected global::System.Web.UI.WebControls.TextBox txtAddress;
 
         /// <summary>
-        /// txtCompanyName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCompanyName;
-
-        /// <summary>
         /// txtLeadBrand control.
         /// </summary>
         /// <remarks>
@@ -471,7 +462,7 @@ namespace AmarCentre.CRM
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drpCurrentStatus;
+        protected global::Telerik.Web.UI.RadComboBox drpCurrentStatus;
 
         /// <summary>
         /// dpDOB control.
@@ -498,7 +489,7 @@ namespace AmarCentre.CRM
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drpMaritalStatus;
+        protected global::Telerik.Web.UI.RadComboBox drpMaritalStatus;
 
         /// <summary>
         /// txtMotherName control.
@@ -564,22 +555,76 @@ namespace AmarCentre.CRM
         protected global::System.Web.UI.WebControls.TextBox txtResponse;
 
         /// <summary>
-        /// UpdDocUpload control.
+        /// updDocumentList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdDocUpload;
+        protected global::System.Web.UI.UpdatePanel updDocumentList;
 
         /// <summary>
-        /// rptDocuments control.
+        /// rptDocs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptDocuments;
+        protected global::System.Web.UI.WebControls.Repeater rptDocs;
+
+        /// <summary>
+        /// drpDocumentType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox drpDocumentType;
+
+        /// <summary>
+        /// fu_Files control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAsyncUpload fu_Files;
+
+        /// <summary>
+        /// Updfu_Files control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel Updfu_Files;
+
+        /// <summary>
+        /// hdnfilenameup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnfilenameup;
+
+        /// <summary>
+        /// hdnfilenamesaveup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnfilenamesaveup;
+
+        /// <summary>
+        /// btnAddDocument control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddDocument;
 
         /// <summary>
         /// btnanwser control.

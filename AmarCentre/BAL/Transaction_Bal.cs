@@ -37,8 +37,8 @@ namespace AmarCentre.BAL
             return (db_obj.GetDataSet());
         }
 
-        public DataSet getCustomerMail(int Id,int pageId)  //1-Quotation  2-invoice , 3- receipt, 4-receiptvoucher ,
-                                                           ////5 -docexpiry, 6-sc&soa , 7-customerlogin detail
+        public DataSet getCustomerMail(int Id, int pageId)  //1-Quotation  2-invoice , 3- receipt, 4-receiptvoucher ,
+                                                            ////5 -docexpiry, 6-sc&soa , 7-customerlogin detail
         {
             Database_Operations db_obj = new Database_Operations("getCustomerMail", true);
             db_obj.AddParameter("@Id", Id);
@@ -46,7 +46,7 @@ namespace AmarCentre.BAL
             return db_obj.GetDataSet();
         }
 
-        public DataTable getCustomerCCMail(int CustomerId)   
+        public DataTable getCustomerCCMail(int CustomerId)
         {
             Database_Operations db_obj = new Database_Operations("getCustomerCCMail", true);
             db_obj.AddParameter("@CustomerId", CustomerId);
@@ -258,7 +258,7 @@ namespace AmarCentre.BAL
             db_obj.AddParameter("@userid", userid);
             return db_obj.GetDataTable();
         }
-        public DataTable ListInvoiceCustm( int page_size, int userid,int? InvoiceStatus)
+        public DataTable ListInvoiceCustm(int page_size, int userid, int? InvoiceStatus)
         {
             Database_Operations db_obj = new Database_Operations("ListInvoiceCustm", true);
             db_obj.AddParameter("@count", page_size);
@@ -266,7 +266,7 @@ namespace AmarCentre.BAL
             db_obj.AddParameter("@InvoiceStatus", InvoiceStatus);
             return db_obj.GetDataTable();
         }
-        public DataTable List_Invoice(int page_number, int page_size, string filter,int userid, int? InvoiceStatus)
+        public DataTable List_Invoice(int page_number, int page_size, string filter, int userid, int? InvoiceStatus)
         {
             Database_Operations db_obj = new Database_Operations("List_Invoice", true);
             db_obj.AddParameter("@page_number", page_number);
@@ -310,10 +310,10 @@ namespace AmarCentre.BAL
             return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
         }
 
-    
+
         public int Insert_Update_InvoiceWitDisc(int Id, DateTime? Qdate, int Cust_id, string remark, int UserId, decimal? TotGrand,
-         DataTable dt_serv, int? Quot_id, decimal Dicounttot, int InvoiceType, int TaxAppliedWithDiscount, int paytype, 
-         decimal bankcharge, decimal chargedamt,int? AgentId,int InvoiceFormat,decimal RoundedOff,string subject,string BillingName,
+         DataTable dt_serv, int? Quot_id, decimal Dicounttot, int InvoiceType, int TaxAppliedWithDiscount, int paytype,
+         decimal bankcharge, decimal chargedamt, int? AgentId, int InvoiceFormat, decimal RoundedOff, string subject, string BillingName,
          int? InvoiceCreater)
         {
             Database_Operations db_obj = new Database_Operations("Insert_Update_InvoiceWitDisc", true);
@@ -342,11 +342,11 @@ namespace AmarCentre.BAL
             return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
         }
 
-   
+
         public int Insert_Update_InvoiceWitDiscSC(int Id, DateTime? Qdate, int Cust_id, string remark, int UserId, decimal? TotGrand,
          DataTable dt_serv, int? Quot_id, decimal Dicounttot, int InvoiceType, int TaxAppliedWithDiscount, DataTable dtexpense, DataTable dtTrans
-            , int paytype, decimal bankcharge, decimal chargedamt,int? AgentId,int InvoiceFormat, decimal RoundedOff,string subject,
-          string BillingName,int? InvoiceCreater)
+            , int paytype, decimal bankcharge, decimal chargedamt, int? AgentId, int InvoiceFormat, decimal RoundedOff, string subject,
+          string BillingName, int? InvoiceCreater)
         {
             Database_Operations db_obj = new Database_Operations("Insert_Update_InvoiceWitDiscSC", true);
             db_obj.AddParameter("@Id", Id);
@@ -416,7 +416,7 @@ namespace AmarCentre.BAL
             db_obj.AddParameter("@detid", detid);
             return (db_obj.GetDataTable());
         }
-        
+
         public int CancelsingleReceiptVoucherentry(int Id, int CreatedBy)
         {
             Database_Operations db_obj = new Database_Operations("CancelsingleReceiptVoucherentry", true);
@@ -519,9 +519,9 @@ namespace AmarCentre.BAL
             Database_Operations db_obj = new Database_Operations("DrpPendingInvoice", true);
             db_obj.AddParameter("@CustomerId", CustomerId);
             return db_obj.GetDataTable();
-        }   
+        }
 
-        public DataTable List_Receipt(int page_number, int page_size, string filter, string column, string order, int userid,int StatusId)
+        public DataTable List_Receipt(int page_number, int page_size, string filter, string column, string order, int userid, int StatusId)
         {
             Database_Operations db_obj = new Database_Operations("List_Receipt", true);
             db_obj.AddParameter("@page_number", page_number);
@@ -559,8 +559,8 @@ namespace AmarCentre.BAL
 
         public int Insert_Update_Receipt(int Id, DateTime? Rdate, int InvoiceId, string Remark, decimal? TotalDiscount, decimal GrandTotAmt,
              decimal AmtPayNow, int PayModeId, int? AccountId, int? PettyCashId, DateTime? ChequeDate, string ChequeNumber, decimal PendingAmount,
-            decimal ReceivedAmount, decimal Balance, DataTable dt_serv, int UserId, decimal? BankCommsn,decimal ChargedAmount,
-            decimal? ChargedAmountReceipt,int? LoanId,decimal SpotCommission, decimal CommissionVat)
+            decimal ReceivedAmount, decimal Balance, DataTable dt_serv, int UserId, decimal? BankCommsn, decimal ChargedAmount,
+            decimal? ChargedAmountReceipt, int? LoanId, decimal SpotCommission, decimal CommissionVat)
         {
             Database_Operations db_obj = new Database_Operations("Insert_Update_Receipt", true);
             db_obj.AddParameter("@Id", Id);
@@ -620,7 +620,7 @@ namespace AmarCentre.BAL
             db_obj.AddParameter("@SerCompletionId ", SerCompletionId);
             return (db_obj.GetDataSet());
         }
-      
+
 
         public DataTable ListAccountInServCompletion(int PayModeId, int UserId, int AccountId)
         {
@@ -638,8 +638,8 @@ namespace AmarCentre.BAL
             return db_obj.GetDataTable();
         }
 
-        public DataTable GetAllServiceSC(int page_number, int page_size, string filter, int Status, int UserId, 
-            int? InvoiceCreator,int? ServiceStatusid)
+        public DataTable GetAllServiceSC(int page_number, int page_size, string filter, int Status, int UserId,
+            int? InvoiceCreator, int? ServiceStatusid)
         {
             Database_Operations db_obj = new Database_Operations("GetAllServiceSC", true);
             db_obj.AddParameter("@page_number", page_number);
@@ -659,7 +659,7 @@ namespace AmarCentre.BAL
             return db_obj.GetDataTable();
         }
 
-        public DataTable Get_List_Invoice_ForSC_Custm( int page_size, int UserId, int? InvoiceCreator,int? ServiceStatusid)
+        public DataTable Get_List_Invoice_ForSC_Custm(int page_size, int UserId, int? InvoiceCreator, int? ServiceStatusid)
         {
             Database_Operations db_obj = new Database_Operations("Get_List_Invoice_ForSC_Custm", true);
             db_obj.AddParameter("@count", page_size);
@@ -670,7 +670,7 @@ namespace AmarCentre.BAL
         }
 
         public DataTable Get_List_Invoice_ForServiceCompletion(int page_number, int page_size, string filter,
-            string column, string order, int Status,int UserId,int? InvoiceCreator, int? ServiceStatusid)
+            string column, string order, int Status, int UserId, int? InvoiceCreator, int? ServiceStatusid)
         {
             Database_Operations db_obj = new Database_Operations("List_Invoice_ForServiceCompletion", true);
             db_obj.AddParameter("@page_number", page_number);
@@ -722,7 +722,7 @@ namespace AmarCentre.BAL
         }
 
         public int Insert_Update_ServiceCompletion(int Id, int InvoiceId, int InvDetailId, decimal Quantity, decimal AmtSingleQty,
-            decimal TotalAmount, DataSet dt_serv, DateTime? SerComDate, int UserId,string scremark, DataTable dtSCfile)
+            decimal TotalAmount, DataSet dt_serv, DateTime? SerComDate, int UserId, string scremark, DataTable dtSCfile)
         {
             Database_Operations db_obj = new Database_Operations("Insert_Update_ServiceCompletion", true);
             db_obj.AddParameter("@Id", Id);
@@ -743,7 +743,7 @@ namespace AmarCentre.BAL
         }
 
         public int Insert_Update_ServiceCompletionAddtional(int Id, int InvoiceId, int InvDetailId, int Quantity, decimal AmtSingleQty,
-         decimal TotalAmount, DataTable dt_serv, DateTime? SerComDate, int UserId,string Remarks)
+         decimal TotalAmount, DataTable dt_serv, DateTime? SerComDate, int UserId, string Remarks)
         {
             Database_Operations db_obj = new Database_Operations("InsertUpdateSCAddtionalExpense", true);
             db_obj.AddParameter("@Id", Id);
@@ -822,7 +822,7 @@ namespace AmarCentre.BAL
         }
 
         public int Insert_Update_EmployeeSalaryProcess(int Id, int Month, int Year, decimal Amount, string Remark,
-             DataTable dtDetail, int UserId,DateTime? Dated)
+             DataTable dtDetail, int UserId, DateTime? Dated)
         {
             Database_Operations db_obj = new Database_Operations("Insert_Update_EmployeeSalaryProcess", true);
             db_obj.AddParameter("@Id", Id);
@@ -967,7 +967,7 @@ namespace AmarCentre.BAL
         }
 
         public int Insert_Update_Quotation(int Id, DateTime? Qdate, int Cust_id, string remark, int UserId, decimal? TotGrand,
-         DataTable dt_serv, int Version, int QuotationType,string Subject)
+         DataTable dt_serv, int Version, int QuotationType, string Subject)
         {
             Database_Operations db_obj = new Database_Operations("Insert_Update_Quotation", true);
             db_obj.AddParameter("@Id", Id);
@@ -1015,7 +1015,7 @@ namespace AmarCentre.BAL
             return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
         }
 
-        public int CancelQuotation(int Id,   string CancellationRemark, int CreatedBy)
+        public int CancelQuotation(int Id, string CancellationRemark, int CreatedBy)
         {
             Database_Operations db_obj = new Database_Operations("CancelQuotation", true);
             db_obj.AddParameter("@Id", Id);
@@ -1254,7 +1254,7 @@ namespace AmarCentre.BAL
         #region Customer Invoice
 
         public DataTable Get_List_CustomerInvoice(int page_number, int page_size, string filter, string column, string order, int userid,
-            DateTime? invoicedate,int? CustomerId,int? AgentId,DateTime? Todate)
+            DateTime? invoicedate, int? CustomerId, int? AgentId, DateTime? Todate)
         {
             Database_Operations db_obj = new Database_Operations("Get_List_CustomerInvoice", true);
             db_obj.AddParameter("@page_number", page_number);
@@ -1763,8 +1763,8 @@ namespace AmarCentre.BAL
             return (db_obj.GetDataSet());
         }
 
-        public int InsertProfitSharing(int Id, int Month, int Year, DateTime? Dated,  decimal NetProfit,
-             string Remark,DataTable dtPartner, int UserId)
+        public int InsertProfitSharing(int Id, int Month, int Year, DateTime? Dated, decimal NetProfit,
+             string Remark, DataTable dtPartner, int UserId)
         {
             Database_Operations db_obj = new Database_Operations("InsertProfitSharing", true);
             db_obj.AddParameter("@Id", Id);
@@ -1780,7 +1780,7 @@ namespace AmarCentre.BAL
             return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
         }
 
-        public int CancelProfitSharing(int Id,  int UserId)
+        public int CancelProfitSharing(int Id, int UserId)
         {
             Database_Operations db_obj = new Database_Operations("CancelProfitSharing", true);
             db_obj.AddParameter("@Id", Id);
@@ -1825,7 +1825,7 @@ namespace AmarCentre.BAL
             return db_obj.GetDataTable();
         }
 
-        public int InsertUpdateVisaArrival(int id, string Name,  DateTime? Dated, DateTime? reacheddate, DateTime? returndate)
+        public int InsertUpdateVisaArrival(int id, string Name, DateTime? Dated, DateTime? reacheddate, DateTime? returndate)
         {
             Database_Operations db_obj = new Database_Operations("InsertUpdateVisaArrival", true);
             db_obj.AddParameter("@Id", id);
@@ -1907,7 +1907,7 @@ namespace AmarCentre.BAL
             return (db_obj.GetDataSet());
         }
 
-        public int Insert_UpdateCreditnote(int Id, DateTime? Rdate, int InvoiceId,int CustomerId, string Remark,
+        public int Insert_UpdateCreditnote(int Id, DateTime? Rdate, int InvoiceId, int CustomerId, string Remark,
           decimal TotalTax, decimal TotalAmount, DataTable dt_serv, int UserId)
         {
             Database_Operations db_obj = new Database_Operations("Insert_UpdateCreditnote", true);
@@ -1995,8 +1995,8 @@ namespace AmarCentre.BAL
             string LeadBrand, string PassportNo,
             DateTime? PassportIssueDate, DateTime? PassportExpiryDate,
             int? CurrentStatus, DateTime? DOB,
-            string Nationality, int? MaritalStatus, string MotherName)
-        {
+            string Nationality, int? MaritalStatus, string MotherName, DataTable dtDocument)
+            {
             Database_Operations db_obj = new Database_Operations("InsertUpdateLeadCreation", true);
             db_obj.AddParameter("@Id", Id);
             db_obj.AddParameter("@Name", Name);
@@ -2034,6 +2034,7 @@ namespace AmarCentre.BAL
             db_obj.AddParameter("@MaritalStatus", MaritalStatus);
             db_obj.AddParameter("@MotherName", MotherName);
             db_obj.AddParameter("@UserId", UserId);
+            db_obj.AddParameter("@dtDocument", dtDocument);
 
             db_obj.AddOutputParameter("@Result");
             db_obj.ExecuteQuery();
@@ -2062,41 +2063,6 @@ namespace AmarCentre.BAL
         {
             Database_Operations db_obj = new Database_Operations("InsertLeadList", true);
             db_obj.AddParameter("@ContentTable", ContentTable);
-            db_obj.AddParameter("@UserId", UserId);
-            db_obj.AddOutputParameter("@Result");
-            db_obj.ExecuteQuery();
-            return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
-        }
-
-
-        /// <summary>Fetch all document rows saved against a lead.</summary>
-        public DataTable GetLeadDocuments(int LeadId)
-        {
-            Database_Operations db_obj = new Database_Operations("GetLeadDocuments", true);
-            db_obj.AddParameter("@LeadId", LeadId);
-            return db_obj.GetDataTable();
-        }
-
-        /// <summary>
-        /// Save (insert new / update existing) document rows for a lead.
-        /// Uses the LeadDocumentType table-valued parameter.
-        /// </summary>
-        public int SaveLeadDocuments(int LeadId, DataTable dtDocuments, int UserId)
-        {
-            Database_Operations db_obj = new Database_Operations("SaveLeadDocuments", true);
-            db_obj.AddParameter("@LeadId", LeadId);
-            db_obj.AddParameter("@dtDocuments", dtDocuments);   // TVP – LeadDocumentType
-            db_obj.AddParameter("@UserId", UserId);
-            db_obj.AddOutputParameter("@Result");
-            db_obj.ExecuteQuery();
-            return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
-        }
-
-        /// <summary>Delete a single document record by Id.</summary>
-        public int DeleteLeadDocument(int Id, int UserId)
-        {
-            Database_Operations db_obj = new Database_Operations("DeleteLeadDocument", true);
-            db_obj.AddParameter("@Id", Id);
             db_obj.AddParameter("@UserId", UserId);
             db_obj.AddOutputParameter("@Result");
             db_obj.ExecuteQuery();
@@ -2248,14 +2214,14 @@ namespace AmarCentre.BAL
             return db_obj.GetDataTable();
         }
 
-        public DataSet EditVendorBalMap(int Id )
+        public DataSet EditVendorBalMap(int Id)
         {
             Database_Operations db_obj = new Database_Operations("EditVendorBalMap", true);
             db_obj.AddParameter("@Id", Id);
             return (db_obj.GetDataSet());
         }
 
-        public int InsertUpdateVendorBalMap(int Id, DateTime? Rdate, int VendorId,int CustomerId, decimal TotalAmount, DataTable dt_serv, int UserId)
+        public int InsertUpdateVendorBalMap(int Id, DateTime? Rdate, int VendorId, int CustomerId, decimal TotalAmount, DataTable dt_serv, int UserId)
         {
             Database_Operations db_obj = new Database_Operations("InsertUpdateVendorBalMap", true);
             db_obj.AddParameter("@Id", Id);
@@ -2326,7 +2292,7 @@ namespace AmarCentre.BAL
             db_obj.ExecuteQuery();
             return Convert.ToInt32(db_obj.SqlCmd.Parameters["@Result"].Value.ToString());
         }
-        
+
         public DataTable Drp_InvoicebyCustomer(int CustomerId)
         {
             Database_Operations db_obj = new Database_Operations("drp_invoicebycustomer", true);
