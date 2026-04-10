@@ -23,31 +23,6 @@ namespace AmarCentre.CRM
         Master_Bal masterBAL = new Master_Bal();
         Transaction_Bal TransBal = new Transaction_Bal();
 
-        // ── Session-level document table stored in ViewState ─────────────────
-        private DataTable DocsTable
-        {
-            get
-            {
-                if (ViewState["DocsTable"] == null)
-                    ViewState["DocsTable"] = CreateDocsSchema();
-                return (DataTable)ViewState["DocsTable"];
-            }
-            set { ViewState["DocsTable"] = value; }
-        }
-
-        private DataTable CreateDocsSchema()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Id", typeof(int));
-            dt.Columns.Add("DocumentId", typeof(int));
-            dt.Columns.Add("DocumentName", typeof(string));
-            dt.Columns.Add("FileNames", typeof(string));
-            dt.Columns.Add("FilenameSave", typeof(string));
-            return dt;
-        }
-
-        // ─────────────────────────────────────────────────────────────────────
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User_Id"] == null)
@@ -677,6 +652,10 @@ namespace AmarCentre.CRM
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup",
                     "ToggleDiv();", true);
             }
+            else if (res == -2)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Message", "alert('Mobile number already exist.!');", true);
+            }
             else
             {
                 lbl_msg.Text = "Sorry Failed to Process Your Request !..";
@@ -1115,12 +1094,10 @@ namespace AmarCentre.CRM
             drpCurrentStatus.Text = "";
             dpDOB.DbSelectedDate = "";
             txtNationality.Text = "";
-            drpMaritalStatus.SelectedIndex = 0;
+            drpMaritalStatus.ClearSelection();
+            drpMaritalStatus.Text = "";
             txtMotherName.Text = "";
 
-            // Reset docs
-            DocsTable = CreateDocsSchema();
-            //BindDocsRepeater();
 
             // Reset service repeater
             DataTable dtService = new DataTable();
@@ -1130,6 +1107,9 @@ namespace AmarCentre.CRM
             dtService.Rows.Add(0, null);
             rptservice.DataSource = dtService;
             rptservice.DataBind();
+
+            rptDocs.DataSource = null;
+            rptDocs.DataBind();
 
             btnDelete.Visible = btnHistory.Visible = btnCreateQutn.Visible = false;
             btnSave.Visible = hdnAdd.Value == "0" ? false : true;

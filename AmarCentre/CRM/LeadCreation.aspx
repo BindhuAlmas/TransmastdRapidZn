@@ -398,95 +398,95 @@
                                         </td>
                                     </tr>
                                     <tr>
-    <td colspan="3">
-        <asp:UpdatePanel ID="updDocumentList" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
-            <Triggers>
-                <asp:PostBackTrigger ControlID="rptDocs" />
-            </Triggers>
-            <ContentTemplate>
-                <table class="listTable">
-                    <thead>
-                        <tr style="text-align:center">
-                            <th style="width:30%">Document Type</th>
-                            <th style="width:50%">File</th>
-                            <th style="width:20%">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <asp:Repeater ID="rptDocs" runat="server"
-                            OnItemCommand="rptDocs_ItemCommand">
-                            <ItemTemplate>
-                                <tr>
-                                    <td>
-                                        <asp:Label ID="lblDocumentType" runat="server" 
-                                            Text='<%# Eval("DocumentName") %>'>
-                                        </asp:Label>
-                                        <asp:HiddenField ID="hdnDocId" runat="server" 
-                                            Value='<%# Eval("Id") %>' />
-                                        <asp:HiddenField ID="hdnDocumentTypeId" runat="server" 
-                                            Value='<%# Eval("DocumentId") %>' />
-                                    </td>
-                                    <td>
-                                        <asp:LinkButton ID="lblfileupl" runat="server"
-                                            Text='<%# Eval("FileNames") %>'
-                                            CommandName="Download"
-                                            ForeColor="Blue"
-                                            Style="text-decoration:underline; font-size:12px;">
-                                        </asp:LinkButton>
-                                        <asp:HiddenField ID="hdnfilesaveupl" runat="server" 
-                                            Value='<%# Eval("FilenameSave") %>' />
-                                    </td>
-                                    <td style="text-align:center">
-                                        <asp:Button ID="btn_delete" runat="server" 
-                                            CssClass="btn_delete" 
-                                            ToolTip="Delete" 
-                                            CommandName="Delete"
-                                            CausesValidation="false"
-                                            OnClientClick="return confirm('Are you sure you want to delete this document?');" />
-                                    </td>
-                                </tr>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                        <tr>
-                            <td>
-                                <telerik:RadComboBox ID="drpDocumentType" 
-                                    Sort="Ascending" Filter="Contains" runat="server"
-                                    AllowCustomText="true" RenderMode="Lightweight" 
-                                    OnClientFocus="OnClientKeyPressing"
-                                    OnClientBlur="ValidateCombo" 
-                                    EmptyMessage="Search Document Type..."
-                                    Style="overflow:hidden; width:96%; border:none!important;">
-                                </telerik:RadComboBox>
-                            </td>
-                            <td>
-                                <telerik:RadAsyncUpload ID="fu_Files" runat="server"
-                                    Width="80%" MaxFileSize="500000000"
-                                    OnFileUploaded="fu_FilesOnFileUploaded"
-                                    MultipleFileSelection="Disabled">
-                                </telerik:RadAsyncUpload>
-                                <asp:UpdatePanel ID="Updfu_Files" runat="server" 
-                                    ChildrenAsTriggers="false" UpdateMode="Conditional">
-                                    <ContentTemplate>
-                                        <asp:HiddenField ID="hdnfilenameup" runat="server" />
-                                        <asp:HiddenField ID="hdnfilenamesaveup" runat="server" />
-                                    </ContentTemplate>
-                                </asp:UpdatePanel>
-                            </td>
-                            <td style="text-align:center">
-                                <asp:Button ID="btnAddDocument" runat="server" 
-                                    CssClass="btnAdd" 
-                                    Text="+" 
-                                    ToolTip="Add Document"
-                                    CausesValidation="false"
-                                    OnClick="btnAddDocument_Click" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </ContentTemplate>
-        </asp:UpdatePanel>
-    </td>
-</tr>
+                                        <td colspan="3">
+                                            <asp:UpdatePanel ID="updDocumentList" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                                                <Triggers>
+                                                    <asp:PostBackTrigger ControlID="rptDocs" />
+                                                </Triggers>
+                                                <ContentTemplate>
+                                                    <table class="listTable" style="width: 65%">
+                                                        <thead>
+                                                            <tr style="text-align: center">
+                                                                <th style="width: 30%">Document Type</th>
+                                                                <th style="width: 50%">File</th>
+                                                                <th style="width: 20%">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <asp:Repeater ID="rptDocs" runat="server"
+                                                                OnItemCommand="rptDocs_ItemCommand">
+                                                                <ItemTemplate>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <asp:Label ID="lblDocumentType" runat="server"
+                                                                                Text='<%# Eval("DocumentName") %>'>
+                                                                            </asp:Label>
+                                                                            <asp:HiddenField ID="hdnDocId" runat="server"
+                                                                                Value='<%# Eval("Id") %>' />
+                                                                            <asp:HiddenField ID="hdnDocumentTypeId" runat="server"
+                                                                                Value='<%# Eval("DocumentId") %>' />
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:LinkButton ID="lblfileupl" runat="server"
+                                                                                Text='<%# Eval("FileNames") %>'
+                                                                                CommandName="Download"
+                                                                                ForeColor="Blue"
+                                                                                Style="text-decoration: underline; font-size: 12px;">
+                                                                            </asp:LinkButton>
+                                                                            <asp:HiddenField ID="hdnfilesaveupl" runat="server"
+                                                                                Value='<%# Eval("FilenameSave") %>' />
+                                                                        </td>
+                                                                        <td style="text-align: center">
+                                                                            <asp:Button ID="btn_delete" runat="server"
+                                                                                CssClass="btn_delete"
+                                                                                ToolTip="Delete"
+                                                                                CommandName="Delete"
+                                                                                CausesValidation="false"
+                                                                                OnClientClick="return confirm('Are you sure you want to delete this document?');" />
+                                                                        </td>
+                                                                    </tr>
+                                                                </ItemTemplate>
+                                                            </asp:Repeater>
+                                                            <tr>
+                                                                <td>
+                                                                    <telerik:RadComboBox ID="drpDocumentType"
+                                                                        Sort="Ascending" Filter="Contains" runat="server"
+                                                                        AllowCustomText="true" RenderMode="Lightweight"
+                                                                        OnClientFocus="OnClientKeyPressing"
+                                                                        OnClientBlur="ValidateCombo"
+                                                                        EmptyMessage="Search Document Type..."
+                                                                        Style="overflow: hidden; width: 96%; border: none!important;">
+                                                                    </telerik:RadComboBox>
+                                                                </td>
+                                                                <td>
+                                                                    <telerik:RadAsyncUpload ID="fu_Files" runat="server"
+                                                                        Width="80%" MaxFileSize="500000000"
+                                                                        OnFileUploaded="fu_FilesOnFileUploaded"
+                                                                        MultipleFileSelection="Disabled">
+                                                                    </telerik:RadAsyncUpload>
+                                                                    <asp:UpdatePanel ID="Updfu_Files" runat="server"
+                                                                        ChildrenAsTriggers="false" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <asp:HiddenField ID="hdnfilenameup" runat="server" />
+                                                                            <asp:HiddenField ID="hdnfilenamesaveup" runat="server" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </td>
+                                                                <td style="text-align: center">
+                                                                    <asp:Button ID="btnAddDocument" runat="server"
+                                                                        CssClass="btnAdd"
+                                                                        Text="+"
+                                                                        ToolTip="Add Document"
+                                                                        CausesValidation="false"
+                                                                        OnClick="btnAddDocument_Click" />
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </td>
+                                    </tr>
                                     <tr >
                                         <td colspan="3">
                                              <asp:Button ID="btnanwser" class="butn_save" style="float:right"  OnClick="btnanwser_Click"
