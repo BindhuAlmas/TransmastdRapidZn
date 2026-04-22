@@ -186,91 +186,106 @@ namespace AmarCentre.CRM
 
         protected void rptListOnItemCommand(object sender, RepeaterCommandEventArgs e)
         {
-            Clear();
             HiddenField hdnRptId = (HiddenField)e.Item.FindControl("hdnId");
-            DataSet dsLeadDetails = TransBal.EditLeadCreation(Convert.ToInt32(hdnRptId.Value));
-            DataTable dtBasic = dsLeadDetails.Tables[0];
-            DataTable dtService = dsLeadDetails.Tables[1];
-            DataTable dtDocument = dsLeadDetails.Tables[2];
 
-            txtAddress.Text = dtBasic.Rows[0]["Address"].ToString();
-            txtMobileNumber.Text = dtBasic.Rows[0]["MobileNumber"].ToString();
-            txtEmailId.Text = dtBasic.Rows[0]["EmailId"].ToString();
-            txtName.Text = dtBasic.Rows[0]["ContactPersonName"].ToString();
-            hdnId.Value = dtBasic.Rows[0]["Id"].ToString();
-            drpSource.SelectedValue = dtBasic.Rows[0]["LeadSourceId"].ToString();
-            txtphone.Text = dtBasic.Rows[0]["LandPhoneNo"].ToString();
-            drpPriority.SelectedValue = dtBasic.Rows[0]["Priority"].ToString();
-            txtcompany.Text = dtBasic.Rows[0]["CompanyName"].ToString();
-            txtResponse.Text = dtBasic.Rows[0]["CustomerResponse"].ToString();
-            Followupdate.DbSelectedDate = dtBasic.Rows[0]["NextFollowupDate"].ToString();
-            radFollowupTime.DbSelectedDate = dtBasic.Rows[0]["NextFollowupTime"].ToString();
-            leadDate.DbSelectedDate = dtBasic.Rows[0]["LeadDate"].ToString();
-            hdnStatus.Value = dtBasic.Rows[0]["Status"].ToString();
-            txtActivity.Text = dtBasic.Rows[0]["Activity"].ToString();
-            txtCPDesig.Text = dtBasic.Rows[0]["ContactPersonDesig"].ToString();
-            txtwebsite.Text = dtBasic.Rows[0]["Website"].ToString();
-            lbl_Code.Text = dtBasic.Rows[0]["Code"].ToString();
-            txtCampaign.Text = dtBasic.Rows[0]["Campaign"].ToString();
-            txtCountryCodeCN.Text = dtBasic.Rows[0]["CountryCodeCN"].ToString();
-            txtCountryCodeLPN.Text = dtBasic.Rows[0]["CountryCodeLPN"].ToString();
-            drpSegment.SelectedValue = dtBasic.Rows[0]["SegmentId"].ToString();
-            drpCity.SelectedValue = dtBasic.Rows[0]["CityId"].ToString();
-
-            // NEW FIELDS
-            txtLeadBrand.Text = dtBasic.Rows[0]["LeadBrand"].ToString();
-            txtPassportNo.Text = dtBasic.Rows[0]["PassportNo"].ToString();
-            dpPassportIssueDate.DbSelectedDate = dtBasic.Rows[0]["PassportIssueDate"].ToString();
-            dpPassportExpiryDate.DbSelectedDate = dtBasic.Rows[0]["PassportExpiryDate"].ToString();
-            dpDOB.DbSelectedDate = dtBasic.Rows[0]["DOB"].ToString();
-            drpCurrentStatus.SelectedValue = dtBasic.Rows[0]["CurrentStatus"].ToString();
-            txtNationality.Text = dtBasic.Rows[0]["Nationality"].ToString();
-            drpMaritalStatus.SelectedValue = dtBasic.Rows[0]["MartialStatus"].ToString();
-            txtMotherName.Text = dtBasic.Rows[0]["MotherName"].ToString();
-
-            drpEmployee.DataSource = TransBal.DrpEmployeeTrans(1);
-            drpEmployee.DataValueField = "Value";
-            drpEmployee.DataTextField = "Text";
-            drpEmployee.DataBind();
-            drpEmployee.SelectedValue = dtBasic.Rows[0]["AssignedEmployeeId"].ToString();
-
-            if (dtService.Rows.Count == 0)
-                dtService.Rows.Add(0, null);
-            rptservice.DataSource = dtService;
-            rptservice.DataBind();
-
-
-            
-            rptDocs.DataSource = dtDocument;
-            rptDocs.DataBind();
-            
-
-            //BindDocsRepeater();
-
-            if (dtBasic.Rows[0]["isclosed"].ToString() == "1")
-                btnSave.Visible = btnCreateQutn.Visible = false;
-            else
+            if (e.CommandName == "Edit")
             {
-                btnSave.Visible = hdnUpdate.Value == "0" ? false : true;
-                btnCreateQutn.Visible = hdnCreateQutn.Value == "0" ? false : true;
+                Clear();
+                DataSet dsLeadDetails = TransBal.EditLeadCreation(Convert.ToInt32(hdnRptId.Value));
+                DataTable dtBasic = dsLeadDetails.Tables[0];
+                DataTable dtService = dsLeadDetails.Tables[1];
+                DataTable dtDocument = dsLeadDetails.Tables[2];
+
+                txtAddress.Text = dtBasic.Rows[0]["Address"].ToString();
+                txtMobileNumber.Text = dtBasic.Rows[0]["MobileNumber"].ToString();
+                txtEmailId.Text = dtBasic.Rows[0]["EmailId"].ToString();
+                txtName.Text = dtBasic.Rows[0]["ContactPersonName"].ToString();
+                hdnId.Value = dtBasic.Rows[0]["Id"].ToString();
+                drpSource.SelectedValue = dtBasic.Rows[0]["LeadSourceId"].ToString();
+                txtphone.Text = dtBasic.Rows[0]["LandPhoneNo"].ToString();
+                drpPriority.SelectedValue = dtBasic.Rows[0]["Priority"].ToString();
+                txtcompany.Text = dtBasic.Rows[0]["CompanyName"].ToString();
+                txtResponse.Text = dtBasic.Rows[0]["CustomerResponse"].ToString();
+                Followupdate.DbSelectedDate = dtBasic.Rows[0]["NextFollowupDate"].ToString();
+                radFollowupTime.DbSelectedDate = dtBasic.Rows[0]["NextFollowupTime"].ToString();
+                leadDate.DbSelectedDate = dtBasic.Rows[0]["LeadDate"].ToString();
+                hdnStatus.Value = dtBasic.Rows[0]["Status"].ToString();
+                txtActivity.Text = dtBasic.Rows[0]["Activity"].ToString();
+                txtCPDesig.Text = dtBasic.Rows[0]["ContactPersonDesig"].ToString();
+                txtwebsite.Text = dtBasic.Rows[0]["Website"].ToString();
+                lbl_Code.Text = dtBasic.Rows[0]["Code"].ToString();
+                txtCampaign.Text = dtBasic.Rows[0]["Campaign"].ToString();
+                txtCountryCodeCN.Text = dtBasic.Rows[0]["CountryCodeCN"].ToString();
+                txtCountryCodeLPN.Text = dtBasic.Rows[0]["CountryCodeLPN"].ToString();
+                drpSegment.SelectedValue = dtBasic.Rows[0]["SegmentId"].ToString();
+                drpCity.SelectedValue = dtBasic.Rows[0]["CityId"].ToString();
+
+                // NEW FIELDS
+                txtLeadBrand.Text = dtBasic.Rows[0]["LeadBrand"].ToString();
+                txtPassportNo.Text = dtBasic.Rows[0]["PassportNo"].ToString();
+                dpPassportIssueDate.DbSelectedDate = dtBasic.Rows[0]["PassportIssueDate"].ToString();
+                dpPassportExpiryDate.DbSelectedDate = dtBasic.Rows[0]["PassportExpiryDate"].ToString();
+                dpDOB.DbSelectedDate = dtBasic.Rows[0]["DOB"].ToString();
+                drpCurrentStatus.SelectedValue = dtBasic.Rows[0]["CurrentStatus"].ToString();
+                txtNationality.Text = dtBasic.Rows[0]["Nationality"].ToString();
+                drpMaritalStatus.SelectedValue = dtBasic.Rows[0]["MartialStatus"].ToString();
+                txtMotherName.Text = dtBasic.Rows[0]["MotherName"].ToString();
+
+                drpEmployee.DataSource = TransBal.DrpEmployeeTrans(1);
+                drpEmployee.DataValueField = "Value";
+                drpEmployee.DataTextField = "Text";
+                drpEmployee.DataBind();
+                drpEmployee.SelectedValue = dtBasic.Rows[0]["AssignedEmployeeId"].ToString();
+
+                if (dtService.Rows.Count == 0)
+                    dtService.Rows.Add(0, null);
+                rptservice.DataSource = dtService;
+                rptservice.DataBind();
+
+                rptDocs.DataSource = dtDocument;
+                rptDocs.DataBind();
+
+
+                //BindDocsRepeater();
+
+                if (dtBasic.Rows[0]["isclosed"].ToString() == "1")
+                    btnSave.Visible = btnCreateQutn.Visible = false;
+                else
+                {
+                    btnSave.Visible = hdnUpdate.Value == "0" ? false : true;
+                    btnCreateQutn.Visible = hdnCreateQutn.Value == "0" ? false : true;
+                }
+
+                btnHistory.Visible = hdnHistory.Value == "0" ? false : true;
+
+                if (dtBasic.Rows[0]["Status"].ToString() != "2" &&
+                    dtBasic.Rows[0]["Status"].ToString() != "3" &&
+                    dtBasic.Rows[0]["isclosed"].ToString() != "1")
+                    btnDelete.Visible = hdnDelete.Value == "0" ? false : true;
+                else
+                    btnDelete.Visible = false;
+
+                btnMail.Visible = hdnSendMail.Value == "0" ? false : true;
+                btnAgreementPrint.Visible = true;
+                PanelAdd.Visible = true;
+                UpdPanelAdd.Update();
             }
+            else if(e.CommandName=="Print")
+            {
+                string url = "";
+                    url = "../Reports/AgreementPdf.aspx?LeadId=" + Convert.ToInt32(hdnRptId.Value);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "NewWindow", "window.open('" + url + "','_blank','height=600,width=900,status=no,toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,titlebar=no' );", true);
 
-            btnHistory.Visible = hdnHistory.Value == "0" ? false : true;
-
-            if (dtBasic.Rows[0]["Status"].ToString() != "2" &&
-                dtBasic.Rows[0]["Status"].ToString() != "3" &&
-                dtBasic.Rows[0]["isclosed"].ToString() != "1")
-                btnDelete.Visible = hdnDelete.Value == "0" ? false : true;
-            else
-                btnDelete.Visible = false;
-
-            btnMail.Visible = hdnSendMail.Value == "0" ? false : true;
-
-            PanelAdd.Visible = true;
-            UpdPanelAdd.Update();
+            }
         }
 
+        protected void btnAgreementPrint_Click(object sender, EventArgs e)
+        {
+            string url = "";
+            url = "../Reports/AgreementPdf.aspx?LeadId=" + Convert.ToInt32(hdnId.Value);
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "NewWindow", "window.open('" + url + "','_blank','height=600,width=900,status=no,toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,titlebar=no' );", true);
 
+        }
         public void fu_FilesOnFileUploaded(object sender, FileUploadedEventArgs e)
         {
             
@@ -305,8 +320,6 @@ namespace AmarCentre.CRM
             Updfu_Files.Update();
             
         }
-
-        // ── Add Document button ───────────────────────────────────────────────
 
         protected void btnAddDocument_Click(object sender, EventArgs e)
         {
@@ -343,8 +356,6 @@ namespace AmarCentre.CRM
 
             updDocumentList.Update();
         }
-
-        // ── Document Repeater ItemCommand (Delete / Download) ─────────────────
 
         protected void rptDocs_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
@@ -402,8 +413,6 @@ namespace AmarCentre.CRM
                 }
             }
         }
-
-        // ─────────────────────────────────────────────────────────────────────
 
         protected void rptserviceOnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -1111,7 +1120,7 @@ namespace AmarCentre.CRM
             rptDocs.DataSource = null;
             rptDocs.DataBind();
 
-            btnDelete.Visible = btnHistory.Visible = btnCreateQutn.Visible = false;
+            btnDelete.Visible = btnAgreementPrint.Visible= btnHistory.Visible = btnCreateQutn.Visible = false;
             btnSave.Visible = hdnAdd.Value == "0" ? false : true;
             btnMail.Visible = hdnSendMail.Value == "0" ? false : true;
             Get_Code();
@@ -1298,5 +1307,7 @@ namespace AmarCentre.CRM
             }
             catch { Response.Redirect("../Landing.aspx"); }
         }
+
+      
     }
 }

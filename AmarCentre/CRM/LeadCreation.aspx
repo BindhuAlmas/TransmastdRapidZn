@@ -105,7 +105,8 @@
                                         <%#Eval("Priorityname")%>
                                     </td>
                                     <td class="listTableActionButtonDiv">
-                                        <asp:Button ID="btnEdit" runat="server" class="btn_edit" />
+                                        <asp:Button ID="btnEdit" runat="server" commandname="Edit" class="btn_edit" />
+                                          <asp:Button ID="btnprint" runat="server" ToolTip="AgreementPrint" commandname="Print" class="btn_print" />
                                     </td>
                                 </tr>
                             </ItemTemplate>
@@ -569,6 +570,8 @@
                                                     runat="server" Text="Create Quotation" />
                                                 <asp:Button ID="btnMail" class="butn_save" ValidationGroup="save" OnClick="btnMailOnClick"
                                                     runat="server" Text="Send Mail" />
+                                                 <asp:Button ID="btnAgreementPrint" class="butn_save"   OnClick="btnAgreementPrint_Click"
+     runat="server" Text="Send Mail" />
                                                 <asp:Button ID="btnDelete" class="butn_delete" runat="server" OnClientClick="javascript : return confirm('Do you really want to Delete.. ?');"
                                                     Visible="false" Text="Delete" OnClick="btnDeleteOnClick" />
                                                 <asp:Button ID="btnHistory" class="butn_save" OnClick="btnhistrymainOnClick" runat="server"

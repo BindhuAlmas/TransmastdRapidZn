@@ -194,6 +194,7 @@
     <Content Include="Layout\Customer.Master" />
     <Content Include="Masters\FixedAsset.aspx" />
     <Content Include="Reports\AccountSummaryReport.aspx" />
+    <Content Include="Reports\AgreementPdf.aspx" />
     <Content Include="Reports\CompanyGroupSOA.aspx" />
     <Content Include="Reports\CompanyGroupSOAPdf.aspx" />
     <Content Include="Web.config">
@@ -1245,6 +1246,13 @@
     </Compile>
     <Compile Include="Reports\AgentCommission.aspx.designer.cs">
       <DependentUpon>AgentCommission.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\AgreementPdf.aspx.cs">
+      <DependentUpon>AgreementPdf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\AgreementPdf.aspx.designer.cs">
+      <DependentUpon>AgreementPdf.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\AgentCommissionPdf.aspx.cs">
       <DependentUpon>AgentCommissionPdf.aspx</DependentUpon>
