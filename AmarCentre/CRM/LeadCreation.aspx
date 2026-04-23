@@ -911,8 +911,8 @@
                                                         <%-- Change LeadBrand eval from "LeadBrand" to "Website" --%>
                                                         <td><asp:Label ID="lblLeadBrand" runat="server" Text='<%#Eval("Website")%>'></asp:Label></td>
 
-                                                        <%-- Change Scope eval from "Scope" to "Activity" --%>
-                                                        <td><asp:Label ID="lblScope" runat="server" Text='<%#Eval("Activity")%>'></asp:Label></td>
+                                                        <%-- Change Scope eval from "Scope" to "Segment" --%>
+                                                        <td><%#Eval("Segment")%><asp:HiddenField ID="hdnSegmentId" runat="server" Value='<%#Eval("SegmentId")%>' /></td>
     
                                                     </tr>
                                                 </ItemTemplate>

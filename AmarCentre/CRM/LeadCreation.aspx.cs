@@ -828,13 +828,13 @@ namespace AmarCentre.CRM
             ContentTable.Columns.Add("LandPhoneNo", typeof(string));
             ContentTable.Columns.Add("Email", typeof(string));
             ContentTable.Columns.Add("Website", typeof(string));  // LeadBrand
-            ContentTable.Columns.Add("Activity", typeof(string)); // Scope
+            ContentTable.Columns.Add("Activity", typeof(string)); 
             ContentTable.Columns.Add("ActivityDescription", typeof(string));
             ContentTable.Columns.Add("CustomerResponse", typeof(string));
             ContentTable.Columns.Add("LeadSourceId", typeof(int));
             ContentTable.Columns.Add("AssignedEmployeeId", typeof(int));
             ContentTable.Columns.Add("PriorityId", typeof(int));
-            ContentTable.Columns.Add("SegmentId", typeof(int));
+            ContentTable.Columns.Add("SegmentId", typeof(int)); // Scope
             ContentTable.Columns.Add("CityId", typeof(int));
 
             foreach (RepeaterItem itm in rptuploaddetail.Items)
@@ -846,6 +846,7 @@ namespace AmarCentre.CRM
                 Label lblLeadBrand = (Label)itm.FindControl("lblLeadBrand");
                 Label lblScope = (Label)itm.FindControl("lblScope");
                 HiddenField hdnLeadSourceId = (HiddenField)itm.FindControl("hdnLeadSourceId");
+                HiddenField hdnSegmentId = (HiddenField)itm.FindControl("hdnSegmentId");
 
                 if (lbldate.Text != "" && lblCompanyName.Text != "")
                     ContentTable.Rows.Add(
@@ -854,20 +855,21 @@ namespace AmarCentre.CRM
                         lblCompanyName.Text,                                          // CompanyName
                         "",                                                           // ContactPersonName
                         "",                                                           // CountryCodeContactNumber
-                        lblContactNumber != null ? lblContactNumber.Text : "",        // ContactNumber
+                        lblContactNumber.Text,        // ContactNumber
                         "",                                                           // ContactPersondesignation
                         "",                                                           // LandPhoneNoCountryCode
                         "",                                                           // LandPhoneNo
-                        lblEmail != null ? lblEmail.Text : "",                        // Email
-                        lblLeadBrand != null ? lblLeadBrand.Text : "",                // Website = LeadBrand
-                        lblScope != null ? lblScope.Text : "",                        // Activity = Scope
+                       lblEmail.Text,                        // Email
+                        lblLeadBrand.Text,                // Website = LeadBrand
+                         "",                                                            // Activity  
                         "",                                                           // ActivityDescription
                         "",                                                           // CustomerResponse
-                        hdnLeadSourceId != null && hdnLeadSourceId.Value != ""
-                            ? Convert.ToInt32(hdnLeadSourceId.Value) : (int?)null,    // LeadSourceId
+                         hdnLeadSourceId.Value == "" ? (int?)null :
+                         Convert.ToInt32(hdnLeadSourceId.Value),                     // LeadSourceId
                         (int?)null,                                                   // AssignedEmployeeId
                         (int?)null,                                                   // PriorityId
-                        (int?)null,                                                   // SegmentId
+                         hdnSegmentId.Value == "" ? (int?)null :
+                         Convert.ToInt32(hdnSegmentId.Value),                         //segemtn / activity = scope                                      // SegmentId
                         (int?)null                                                    // CityId
                     );
             }
@@ -941,7 +943,7 @@ namespace AmarCentre.CRM
             ContentTable.Columns.Add("Campaign", typeof(string));
             ContentTable.Columns.Add("CompanyName", typeof(string));
             ContentTable.Columns.Add("ContactPersonName", typeof(string));
-            ContentTable.Columns.Add("Segment", typeof(string));
+            ContentTable.Columns.Add("Segment", typeof(string));  // scope
             ContentTable.Columns.Add("LeadSource", typeof(string));
             ContentTable.Columns.Add("City", typeof(string));
             ContentTable.Columns.Add("CountryCodeContactNumber", typeof(string));
@@ -953,7 +955,6 @@ namespace AmarCentre.CRM
             ContentTable.Columns.Add("Website", typeof(string)); //leadbrand
             ContentTable.Columns.Add("AssignedEmployee", typeof(string));
             ContentTable.Columns.Add("Priority", typeof(string));
-            //ContentTable.Columns.Add("Segment", typeof(string));  // index 4
             ContentTable.Columns.Add("Activity", typeof(string));
             ContentTable.Columns.Add("ActivityDescription", typeof(string));
             ContentTable.Columns.Add("CustomerResponse", typeof(string));
@@ -997,7 +998,7 @@ namespace AmarCentre.CRM
                                     "",                                        // Campaign
                                     dr["Lead Name"].ToString().Trim(),         // CompanyName
                                     "",                                        // ContactPersonName
-                                    "",                                        // Segment
+                                    dr["Scope"].ToString().Trim(),             // Segment = Scope
                                     dr["Platform"].ToString().Trim(),          // LeadSource
                                     "",                                        // City
                                     "",                                        // CountryCodeContactNumber
@@ -1009,7 +1010,7 @@ namespace AmarCentre.CRM
                                     dr["Lead Brand"].ToString().Trim(),        // Website = LeadBrand
                                     "",                                        // AssignedEmployee
                                     "",                                        // Priority
-                                    dr["Scope"].ToString().Trim(),             // Activity = Scope
+                                    "",                                         // Activity 
                                     "",                                        // ActivityDescription
                                     ""                                         // CustomerResponse
                                 );
