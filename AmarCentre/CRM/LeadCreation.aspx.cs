@@ -827,8 +827,8 @@ namespace AmarCentre.CRM
             ContentTable.Columns.Add("LandPhoneNoCountryCode", typeof(string));
             ContentTable.Columns.Add("LandPhoneNo", typeof(string));
             ContentTable.Columns.Add("Email", typeof(string));
-            ContentTable.Columns.Add("Website", typeof(string));
-            ContentTable.Columns.Add("Activity", typeof(string));
+            ContentTable.Columns.Add("Website", typeof(string));  // LeadBrand
+            ContentTable.Columns.Add("Activity", typeof(string)); // Scope
             ContentTable.Columns.Add("ActivityDescription", typeof(string));
             ContentTable.Columns.Add("CustomerResponse", typeof(string));
             ContentTable.Columns.Add("LeadSourceId", typeof(int));
@@ -841,39 +841,35 @@ namespace AmarCentre.CRM
             {
                 Label lbldate = (Label)itm.FindControl("lbldate");
                 Label lblCompanyName = (Label)itm.FindControl("lblCompanyName");
-                Label lblCampaign = (Label)itm.FindControl("lblCampaign");
-                Label lblContactPersonName = (Label)itm.FindControl("lblContactPersonName");
-                Label lblContactPersondesignation = (Label)itm.FindControl("lblContactPersondesignation");
                 Label lblContactNumber = (Label)itm.FindControl("lblContactNumber");
-                Label lblCountryCodeContactNumber = (Label)itm.FindControl("lblCountryCodeContactNumber");
-                Label lblLandPhoneNoCountryCode = (Label)itm.FindControl("lblLandPhoneNoCountryCode");
-                Label lblLandPhoneNo = (Label)itm.FindControl("lblLandPhoneNo");
                 Label lblEmail = (Label)itm.FindControl("lblEmail");
-                Label lblWebsite = (Label)itm.FindControl("lblWebsite");
-                Label lblActivity = (Label)itm.FindControl("lblActivity");
-                Label lblActivityDescription = (Label)itm.FindControl("lblActivityDescription");
-                Label lblCustomerResponse = (Label)itm.FindControl("lblCustomerResponse");
+                Label lblLeadBrand = (Label)itm.FindControl("lblLeadBrand");
+                Label lblScope = (Label)itm.FindControl("lblScope");
                 HiddenField hdnLeadSourceId = (HiddenField)itm.FindControl("hdnLeadSourceId");
-                HiddenField hdnAssignedEmployeeId = (HiddenField)itm.FindControl("hdnAssignedEmployeeId");
-                HiddenField hdnPriorityId = (HiddenField)itm.FindControl("hdnPriorityId");
-                HiddenField hdnCityId = (HiddenField)itm.FindControl("hdnCityId");
-                HiddenField hdnSegmentId = (HiddenField)itm.FindControl("hdnSegmentId");
 
-                if (lbldate.Text != "" && lblCompanyName.Text != "" &&
-                    lblCampaign.Text != "" && lblContactPersonName.Text != "")
+                if (lbldate.Text != "" && lblCompanyName.Text != "")
                     ContentTable.Rows.Add(
                         Convert.ToDateTime(lbldate.Text),
-                        lblCampaign.Text, lblCompanyName.Text, lblContactPersonName.Text,
-                        lblCountryCodeContactNumber.Text, lblContactNumber.Text,
-                        lblContactPersondesignation.Text,
-                        lblLandPhoneNoCountryCode.Text, lblLandPhoneNo.Text,
-                        lblEmail.Text, lblWebsite.Text, lblActivity.Text,
-                        lblActivityDescription.Text, lblCustomerResponse.Text,
-                        hdnLeadSourceId.Value == "" ? (int?)null : Convert.ToInt32(hdnLeadSourceId.Value),
-                        hdnAssignedEmployeeId.Value == "" ? (int?)null : Convert.ToInt32(hdnAssignedEmployeeId.Value),
-                        hdnPriorityId.Value == "" ? (int?)null : Convert.ToInt32(hdnPriorityId.Value),
-                        hdnSegmentId.Value == "" ? (int?)null : Convert.ToInt32(hdnSegmentId.Value),
-                        hdnCityId.Value == "" ? (int?)null : Convert.ToInt32(hdnCityId.Value));
+                        "",                                                           // Campaign
+                        lblCompanyName.Text,                                          // CompanyName
+                        "",                                                           // ContactPersonName
+                        "",                                                           // CountryCodeContactNumber
+                        lblContactNumber != null ? lblContactNumber.Text : "",        // ContactNumber
+                        "",                                                           // ContactPersondesignation
+                        "",                                                           // LandPhoneNoCountryCode
+                        "",                                                           // LandPhoneNo
+                        lblEmail != null ? lblEmail.Text : "",                        // Email
+                        lblLeadBrand != null ? lblLeadBrand.Text : "",                // Website = LeadBrand
+                        lblScope != null ? lblScope.Text : "",                        // Activity = Scope
+                        "",                                                           // ActivityDescription
+                        "",                                                           // CustomerResponse
+                        hdnLeadSourceId != null && hdnLeadSourceId.Value != ""
+                            ? Convert.ToInt32(hdnLeadSourceId.Value) : (int?)null,    // LeadSourceId
+                        (int?)null,                                                   // AssignedEmployeeId
+                        (int?)null,                                                   // PriorityId
+                        (int?)null,                                                   // SegmentId
+                        (int?)null                                                    // CityId
+                    );
             }
 
             int res = TransBal.InsertLeadList(ContentTable, Convert.ToInt32(hdnUserId.Value));
@@ -884,21 +880,18 @@ namespace AmarCentre.CRM
                     hdnFilter.Value, hdnOrderByColumnName.Value, hdnOrderBy.Value);
                 Clear();
                 lbl_msg.Text = "Saved Successfully !..";
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup",
-                    "ToggleDiv();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "ToggleDiv();", true);
                 pnlupload.Visible = false;
             }
             else if (res == -1)
             {
                 lbl_msg.Text = "Add questionaire details !..";
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup",
-                    "ToggleDiv();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "ToggleDiv();", true);
             }
             else
             {
                 lbl_msg.Text = "Sorry Failed to Process Your Request !..";
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup",
-                    "ToggleDiv();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "ToggleDiv();", true);
             }
             UpdPanelAdd.Update();
         }
@@ -957,9 +950,10 @@ namespace AmarCentre.CRM
             ContentTable.Columns.Add("LandPhoneNoCountryCode", typeof(string));
             ContentTable.Columns.Add("LandPhoneNo", typeof(string));
             ContentTable.Columns.Add("Email", typeof(string));
-            ContentTable.Columns.Add("Website", typeof(string));
+            ContentTable.Columns.Add("Website", typeof(string)); //leadbrand
             ContentTable.Columns.Add("AssignedEmployee", typeof(string));
             ContentTable.Columns.Add("Priority", typeof(string));
+            //ContentTable.Columns.Add("Segment", typeof(string));  // index 4
             ContentTable.Columns.Add("Activity", typeof(string));
             ContentTable.Columns.Add("ActivityDescription", typeof(string));
             ContentTable.Columns.Add("CustomerResponse", typeof(string));
@@ -971,9 +965,14 @@ namespace AmarCentre.CRM
             {
                 string connString = "";
                 string filepath = Path.Combine(Server.MapPath("~/UploadedFiles"), hdnleadFile.Value);
-                if (hdnleadfileExtension.Value == ".xls")
-                    connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filepath
-                        + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1;TypeGuessRows=0\"";
+                string ext = hdnleadfileExtension.Value.ToLower().Trim();
+
+                if (ext == ".xls")
+                    connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filepath
+                        + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
+                else if (ext == ".xlsx")
+                    connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filepath
+                        + ";Extended Properties=\"Excel 12.0 Xml;HDR=Yes;IMEX=1\"";
 
                 OleDbConnection OledbConn = new OleDbConnection(connString);
                 try
@@ -995,29 +994,30 @@ namespace AmarCentre.CRM
                                 ContentTable.Rows.Add(
                                     dr["Date"].ToString().Trim() == string.Empty ? (DateTime?)null
                                         : Convert.ToDateTime(dr["Date"].ToString().Trim()),
-                                    dr["Campaign"].ToString().Trim(),
-                                    dr["CompanyName"].ToString().Trim(),
-                                    dr["ContactPersonName"].ToString().Trim(),
-                                    dr["Segment"].ToString().Trim(),
-                                    dr["LeadSource"].ToString().Trim(),
-                                    dr["City"].ToString().Trim(),
-                                    dr["CountryCodeContactNumber"].ToString().Trim(),
-                                    dr["ContactNumber"].ToString().Trim(),
-                                    dr["ContactPersondesignation"].ToString().Trim(),
-                                    dr["LandPhoneNoCountryCode"].ToString().Trim(),
-                                    dr["LandPhoneNo"].ToString().Trim(),
-                                    dr["Email"].ToString().Trim(),
-                                    dr["Website"].ToString().Trim(),
-                                    dr["AssignedEmployee"].ToString().Trim(),
-                                    dr["Priority"].ToString().Trim(),
-                                    dr["Activity"].ToString().Trim(),
-                                    dr["ActivityDescription"].ToString().Trim(),
-                                    dr["CustomerResponse"].ToString().Trim());
+                                    "",                                        // Campaign
+                                    dr["Lead Name"].ToString().Trim(),         // CompanyName
+                                    "",                                        // ContactPersonName
+                                    "",                                        // Segment
+                                    dr["Platform"].ToString().Trim(),          // LeadSource
+                                    "",                                        // City
+                                    "",                                        // CountryCodeContactNumber
+                                    dr["Phone Number"].ToString().Trim(),      // ContactNumber
+                                    "",                                        // ContactPersondesignation
+                                    "",                                        // LandPhoneNoCountryCode
+                                    "",                                        // LandPhoneNo
+                                    dr["Email"].ToString().Trim(),             // Email
+                                    dr["Lead Brand"].ToString().Trim(),        // Website = LeadBrand
+                                    "",                                        // AssignedEmployee
+                                    "",                                        // Priority
+                                    dr["Scope"].ToString().Trim(),             // Activity = Scope
+                                    "",                                        // ActivityDescription
+                                    ""                                         // CustomerResponse
+                                );
                             }
                             catch (Exception ex1)
                             {
                                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
-                                    "alert('" + ex1.Message + "');", true);
+                                    "alert('" + ex1.Message.Replace("'", "").Replace("\r", "").Replace("\n", "") + "');", true);
                             }
                         }
                     }
@@ -1027,7 +1027,7 @@ namespace AmarCentre.CRM
                 catch (Exception ex)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
-                        "alert('Please upload the correct file format');", true);
+                        "alert('Error: " + ex.Message.Replace("'", "").Replace("\r", "").Replace("\n", "") + "');", true);
                 }
             }
             else
@@ -1038,8 +1038,7 @@ namespace AmarCentre.CRM
 
             if (ContentTable.Rows.Count > 0)
             {
-                DataSet ds = TransBal.LeadUploadTable(ContentTable,
-                    Convert.ToInt32(hdnUserId.Value));
+                DataSet ds = TransBal.LeadUploadTable(ContentTable, Convert.ToInt32(hdnUserId.Value));
                 DataTable restble = ds.Tables[0];
                 string msg = ds.Tables[1].Rows[0][0].ToString();
 

@@ -856,24 +856,27 @@
                                     <table class="listTable">
                                         <thead>
                                             <tr>
+                                                 
                                                  <th>Sl</th>
                                                 <th style="color:red">Date</th>
-                                                 <th style="color:red">Campaign</th>
-                                                 <th style="color:red">CompanyName</th>
-                                                 <th style="color:red">ContactPersonName</th>
-                                                 <th style="color:red">Segment</th>
-                                                 <th style="color:red">LeadSource</th>
-                                                 <th style="color:red">City</th>
-                                                 <th style="color:red">ContactNumber</th>
-                                                 <th>ContactPersondesignation</th>
-                                                 <th>LandPhoneNo</th>
-                                                 <th>Email</th>
-                                                 <th>Website</th>
-                                                 <th>AssignedEmployee</th>
-                                                 <th>Priority</th>
-                                                 <th>Activity</th>
-                                                 <th>ActivityDescription</th>
-                                                 <th>CustomerResponse</th>
+                                                <%--<th style="color:red">Campaign</th>--%>
+                                                <th style="color:red">LeadName</th>
+                                                <%--<th style="color:red">ContactPersonName</th>--%>
+                                                <%--<th style="color:red">Segment</th>--%>
+                                                <th style="color:red">Platform (Lead Source)</th>
+                                                <%--<th style="color:red">City</th>--%>
+                                                <th style="color:red">ContactNumber</th>
+                                                <%--<th>ContactPersondesignation</th>--%>
+                                                <%--<th>LandPhoneNo</th>--%>
+                                                <th>Email</th>
+                                                <%--<th>Website</th>--%>
+                                                <%--<th>AssignedEmployee</th>--%>
+                                                <%--<th>Priority</th>--%>
+                                                <%--<th>Activity</th>--%>
+                                                <%--<th>ActivityDescription</th>--%>
+                                                <%--<th>CustomerResponse</th>--%>
+                                                <th>Lead Brand</th>
+                                                <th>Scope</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -882,45 +885,35 @@
                                                     <tr>
                                                         <td><%# Container.ItemIndex + 1 %></td>
                                                         <td><asp:Label ID="lbldate" runat="server" Text='<%#Eval("Date")%>'></asp:Label></td>
-                                                        <td><asp:Label ID="lblCampaign" runat="server" Text='<%#Eval("Campaign")%>'></asp:Label></td>
+                                                        <%--<td><asp:Label ID="lblCampaign" runat="server" Text='<%#Eval("Campaign")%>'></asp:Label></td>--%>
                                                         <td><asp:Label ID="lblCompanyName" runat="server" Text='<%#Eval("CompanyName")%>'></asp:Label></td>
-                                                        <td><asp:Label ID="lblContactPersonName" runat="server" Text='<%#Eval("ContactPersonName")%>'></asp:Label></td>
-                                                        <td>
-                                                            <%#Eval("Segment")%>
-                                                            <asp:HiddenField ID="hdnSegmentId" runat="server" Value='<%#Eval("SegmentId")%>' />
-                                                        </td>
+                                                        <%--<td><asp:Label ID="lblContactPersonName" runat="server" Text='<%#Eval("ContactPersonName")%>'></asp:Label></td>--%>
+                                                        <%--<td><%#Eval("Segment")%><asp:HiddenField ID="hdnSegmentId" runat="server" Value='<%#Eval("SegmentId")%>' /></td>--%>
                                                         <td>
                                                             <%#Eval("LeadSource")%>
                                                             <asp:HiddenField ID="hdnLeadSourceId" runat="server" Value='<%#Eval("LeadSourceId")%>' />
                                                         </td>
+                                                        <%--<td><%#Eval("City")%><asp:HiddenField ID="hdnCityId" runat="server" Value='<%#Eval("CityId")%>' /></td>--%>
                                                         <td>
-                                                            <%#Eval("City")%>
-                                                            <asp:HiddenField ID="hdnCityId" runat="server" Value='<%#Eval("CityId")%>' />
+                                                            <%#Eval("CountryCodeContactNumber")%> <%#Eval("ContactNumber")%>
+                                                            <asp:Label ID="lblCountryCodeContactNumber" Visible="false" runat="server" Text='<%#Eval("CountryCodeContactNumber")%>'></asp:Label>
+                                                            <asp:Label ID="lblContactNumber" runat="server" Visible="false" Text='<%#Eval("ContactNumber")%>'></asp:Label>
                                                         </td>
-                                                        <td> 
-                                                             <%#Eval("CountryCodeContactNumber")%> <%#Eval("ContactNumber")%>
-                                                             <asp:Label ID="lblCountryCodeContactNumber" Visible="false" runat="server" Text='<%#Eval("CountryCodeContactNumber")%>'></asp:Label>
-                                                             <asp:Label ID="lblContactNumber" runat="server" Visible="false" Text='<%#Eval("ContactNumber")%>'></asp:Label>
-                                                        </td>
-                                                        <td><asp:Label ID="lblContactPersondesignation" runat="server" Text='<%#Eval("ContactPersondesignation")%>'></asp:Label></td>
-                                                        <td>
-                                                            <%#Eval("LandPhoneNoCountryCode")%> <%#Eval("LandPhoneNo")%>
-                                                            <asp:Label ID="lblLandPhoneNoCountryCode" Visible="false" runat="server" Text='<%#Eval("LandPhoneNoCountryCode")%>'></asp:Label>
-                                                            <asp:Label ID="lblLandPhoneNo" runat="server" Visible="false" Text='<%#Eval("LandPhoneNo")%>'></asp:Label>
-                                                        </td>
+                                                        <%--<td><asp:Label ID="lblContactPersondesignation" runat="server" Text='<%#Eval("ContactPersondesignation")%>'></asp:Label></td>--%>
+                                                        <%--<td><%#Eval("LandPhoneNoCountryCode")%> <%#Eval("LandPhoneNo")%></td>--%>
                                                         <td><asp:Label ID="lblEmail" runat="server" Text='<%#Eval("Email")%>'></asp:Label></td>
-                                                        <td><asp:Label ID="lblWebsite" runat="server" Text='<%#Eval("Website")%>'></asp:Label></td>
-                                                        <td>
-                                                            <%#Eval("AssignedEmployee")%>
-                                                            <asp:HiddenField ID="hdnAssignedEmployeeId" runat="server" Value='<%#Eval("AssignedEmployeeId")%>' />
-                                                        </td>
-                                                        <td>
-                                                            <%#Eval("Priority")%>
-                                                            <asp:HiddenField ID="hdnPriorityId" runat="server" Value='<%#Eval("PriorityId")%>' />
-                                                        </td>
-                                                        <td><asp:Label ID="lblActivity" runat="server" Text='<%#Eval("Activity")%>'></asp:Label></td>
-                                                        <td><asp:Label ID="lblActivityDescription" runat="server" Text='<%#Eval("ActivityDescription")%>'></asp:Label></td>
-                                                        <td><asp:Label ID="lblCustomerResponse" runat="server" Text='<%#Eval("CustomerResponse")%>'></asp:Label></td>
+                                                        <%--<td><asp:Label ID="lblWebsite" runat="server" Text='<%#Eval("Website")%>'></asp:Label></td>--%>
+                                                        <%--<td><%#Eval("AssignedEmployee")%><asp:HiddenField ID="hdnAssignedEmployeeId" runat="server" Value='<%#Eval("AssignedEmployeeId")%>' /></td>--%>
+                                                        <%--<td><%#Eval("Priority")%><asp:HiddenField ID="hdnPriorityId" runat="server" Value='<%#Eval("PriorityId")%>' /></td>--%>
+                                                        <%--<td><asp:Label ID="lblActivity" runat="server" Text='<%#Eval("Activity")%>'></asp:Label></td>--%>
+                                                        <%--<td><asp:Label ID="lblActivityDescription" runat="server" Text='<%#Eval("ActivityDescription")%>'></asp:Label></td>--%>
+                                                        <%--<td><asp:Label ID="lblCustomerResponse" runat="server" Text='<%#Eval("CustomerResponse")%>'></asp:Label></td>--%>
+                                                        <%-- Change LeadBrand eval from "LeadBrand" to "Website" --%>
+                                                        <td><asp:Label ID="lblLeadBrand" runat="server" Text='<%#Eval("Website")%>'></asp:Label></td>
+
+                                                        <%-- Change Scope eval from "Scope" to "Activity" --%>
+                                                        <td><asp:Label ID="lblScope" runat="server" Text='<%#Eval("Activity")%>'></asp:Label></td>
+    
                                                     </tr>
                                                 </ItemTemplate>
                                             </asp:Repeater>
