@@ -966,14 +966,19 @@ namespace AmarCentre.CRM
             {
                 string connString = "";
                 string filepath = Path.Combine(Server.MapPath("~/UploadedFiles"), hdnleadFile.Value);
-                string ext = hdnleadfileExtension.Value.ToLower().Trim();
+                if (hdnleadfileExtension.Value == ".xls")
+                {
+                    //Connectionstring for excel v8.0    
+                    connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filepath + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1;TypeGuessRows=0\"";
+                }
+                //string ext = hdnleadfileExtension.Value.ToLower().Trim();
 
-                if (ext == ".xls")
-                    connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filepath
-                        + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
-                else if (ext == ".xlsx")
-                    connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filepath
-                        + ";Extended Properties=\"Excel 12.0 Xml;HDR=Yes;IMEX=1\"";
+                //if (ext == ".xls")
+                //    connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filepath
+                //        + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
+                //else if (ext == ".xlsx")
+                //    connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filepath
+                //        + ";Extended Properties=\"Excel 12.0 Xml;HDR=Yes;IMEX=1\"";
 
                 OleDbConnection OledbConn = new OleDbConnection(connString);
                 try
